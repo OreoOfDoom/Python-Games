@@ -67,6 +67,19 @@ def main():
           
         if keys[pygame.K_DOWN]:
             d_y = v * d_t
+
+        if keys[pygame.K_a]:
+            d_x = -v * d_t
+          
+        if keys[pygame.K_d]:
+            d_x = v * d_t
+          
+        if keys[pygame.K_w]:
+            d_y = -v * d_t
+          
+        if keys[pygame.K_s]:
+            d_y = v * d_t
+           
            
         # Update the position of the square
         x = x + d_x
@@ -83,7 +96,7 @@ def main():
         screen.fill(BACKGROUND_COLOR)
 
         # Draw the square
-        pygame.draw.rect(screen, SQUARE_COLOR, (x, y, SQUARE_SIZE, SQUARE_SIZE))
+        pygame.draw.circle(screen, SQUARE_COLOR,(x,y) ,30) #(x, y, SQUARE_SIZE, SQUARE_SIZE))
 
         # Update the display. Imagine that the screen is two different whiteboards. One
         # whiteboard is currently visible to the player, and the other whiteboard is being
