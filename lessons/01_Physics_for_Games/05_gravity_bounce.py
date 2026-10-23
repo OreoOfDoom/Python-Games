@@ -19,8 +19,8 @@ class GameSettings:
     background_color: tuple = (255, 255, 255)  # White
     fps: int = 30
     gravity: float = 60.0  # Acceleration due to gravity
-    jump_velocity_y: float = 200.0  # Initial jump velocity in y direction
-    jump_velocity_x: float = 100.0  # Initial jump velocity in x direction
+    jump_velocity_y: float =  200.0  # Initial jump velocity in y direction
+    jump_velocity_x: float =  92.3  # Initial jump velocity in x direction
     d_t: float = 1.0/30  # Time step for physics calculations
 
 # Initialize Pygame
@@ -31,10 +31,10 @@ settings = GameSettings()
 
 # Initialize screen
 screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
-pygame.display.set_caption("Gravity Bounce")
+pygame.display.set_caption("It bounces now")
 
 # Square starting position
-x_pos = 100
+x_pos = 430
 y_pos = settings.screen_height - settings.square_size
 
 # Initial velocities  
@@ -47,7 +47,8 @@ is_jumping = False
 # Main loop
 running = True
 clock = pygame.time.Clock()
-
+velocity_y = 0
+velocity_x = 0
 while running:
 
     # Handle events, such as quitting the game
@@ -56,16 +57,37 @@ while running:
             running = False
 
     # Continuously jump. If the square is not jumping, make it jump
-    if is_jumping is False:
+    #if is_jumping is False:'
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE] :
         # Jumping means that the square is going up. The top of the 
         # screen is y=0, and the bottom is y=screen_height. So, to go up,
         # we need to have a negative y velocity
         
-        velocity_y = -settings.jump_velocity_y
-        velocity_x = settings.jump_velocity_x * x_direction
+            velocity_y = -settings.jump_velocity_y
+            velocity_x = settings.jump_velocity_x * x_direction
+            is_jumping = True
+       
+        v = velocity_y
+        d_x = 50
+        d_y = 50
+        d_t = 1 
         
-        is_jumping = True
         
+        if keys[pygame.K_RIGHT]:
+            d_x = -v * d_t
+          
+        if keys[pygame.K_LEFT]:
+            d_x = v * d_t
+          
+        if keys[pygame.K_UP]:
+            d_y = -v * d_t
+          
+        if keys[pygame.K_DOWN]:
+            d_y = v * d_t
+
+       
+       
     else: # the square is jumping
         # Update square position. Gravity is always pulling the square down,
         # which is the positive y direction, so we add settings.gravity to the y velocity

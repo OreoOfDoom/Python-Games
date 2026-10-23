@@ -8,7 +8,7 @@ SCREEN_WIDTH, SCREEN_HEIGHT = 600, 600
 SQUARE_SIZE = 50
 SQUARE_COLOR = (52, 213, 235)  # Cyan
 FPS = 60
-K = 22000 # Spring constant, controls how strong the spring force is
+K = 220 # Spring constant, controls how strong the spring force is
 
 # Set up the display
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
