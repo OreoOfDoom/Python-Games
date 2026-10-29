@@ -19,9 +19,11 @@ class GameSettings:
     background_color: tuple = (255, 255, 255)  # White
     fps: int = 30
     gravity: float = 60.0  # Acceleration due to gravity
+    drag: float = 100.0
     jump_velocity_y: float =  200.0  # Initial jump velocity in y direction
-    jump_velocity_x: float =  92.3  # Initial jump velocity in x direction
+    jump_velocity_x: float =  0  # Initial jump velocity in x direction
     d_t: float = 1.0/30  # Time step for physics calculations
+    x_speed = 14
 
 # Initialize Pygame
 pygame.init()
@@ -49,6 +51,7 @@ running = True
 clock = pygame.time.Clock()
 velocity_y = 0
 velocity_x = 0
+d_x = 0
 while running:
 
     # Handle events, such as quitting the game
@@ -57,34 +60,23 @@ while running:
             running = False
 
     # Continuously jump. If the square is not jumping, make it jump
-    #if is_jumping is False:'
+    if is_jumping is False:
+    
+
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] :
         # Jumping means that the square is going up. The top of the 
         # screen is y=0, and the bottom is y=screen_height. So, to go up,
         # we need to have a negative y velocity
-        
+
             velocity_y = -settings.jump_velocity_y
             velocity_x = settings.jump_velocity_x * x_direction
             is_jumping = True
-       
-        v = velocity_y
-        d_x = 50
-        d_y = 50
-        d_t = 1 
-        
-        
-        if keys[pygame.K_RIGHT]:
-            d_x = -v * d_t
-          
-        if keys[pygame.K_LEFT]:
-            d_x = v * d_t
-          
-        if keys[pygame.K_UP]:
-            d_y = -v * d_t
-          
-        if keys[pygame.K_DOWN]:
-            d_y = v * d_t
+
+            
+            
+
+  
 
        
        
@@ -94,14 +86,51 @@ while running:
         # to make the square go up more slowly. Eventually, the square will have
         # a positive y velocity, and gravity will pull the square down.
 
+
+
+
         velocity_y += settings.gravity * settings.d_t
+        #Make a drag function  
+        if velocity_x >0:
+            velocity_x -= settings.drag * settings.d_t
+        if velocity_x <0:
+            velocity_x += settings.drag * settings.d_t
+        if velocity_x > 0 and velocity_x < 0.1:
+            velocity_x =0
+        if velocity_x < 0 and velocity_x > 0.1:
+            velocity_x = 0
+        # if velocity_y >0:
+        #     velocity_y -= settings.drag * settings.d_t
+        # if velocity_y <0:
+        #     velocity_y += settings.drag * settings.d_t
+        # if velocity_y <0.1:
+        #     velocity_y =0
         
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            velocity_x -= settings.x_speed
+          
+            
+            
+        if keys[pygame.K_RIGHT]:
+            velocity_x += settings.x_speed
+
         # Update the position with the velocity. Like with the velocity, we change
         # the position by adding the velocity, not setting it to the velocity, and
         # we change it a bit each frame.
         y_pos += velocity_y * settings.d_t
         x_pos += velocity_x * settings.d_t
+           
+                        
+            
+       
+    acceleration = .1
+    keys = pygame.key.get_pressed()
+    
         
+        
+        
+
     # If the square hits one side of the screen or the other, bounce the square
     if x_pos <= 0 or x_pos + settings.square_size >= settings.screen_width:
         velocity_x = -velocity_x
