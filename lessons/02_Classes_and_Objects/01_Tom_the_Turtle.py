@@ -38,6 +38,14 @@ def event_loop():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+class Alien:
+    def __init__(self,eyes,legs,color):
+
+        self.eyes = eyes
+        self.color = color
+        self.legs = legs
+    def print_description():
+
 
 class Turtle:
     def __init__(self, screen, x: int, y: int):
@@ -67,7 +75,14 @@ class Turtle:
     def left(self, angle):
         # Turn left by adjusting the angle counterclockwise
         self.angle = (self.angle + angle) % 360
-
+# def alien (name,legs,eyes,color):
+    
+#     alien = Turtle
+#     alien.legs = legs
+#     alien.name = name
+#     alien.color = color
+#     alien.eyes = eyes
+#     print (f"{alien.name} the alien has {alien.legs} legs, {alien.eyes} eyes,\n and he is {alien.color}.")
 
 # Main loop
 
@@ -80,8 +95,9 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Turtle Style Drawing")
 
 # Colors
-white = (255, 255, 255)
+white = (255, 250, 55)
 black = (0, 0, 0)
+alien()
 
 screen.fill(white)
 turtle = Turtle(screen, screen.get_width() // 2, screen.get_height() // 2)  # Start at the center of the screen
