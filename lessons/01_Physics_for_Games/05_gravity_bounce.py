@@ -23,7 +23,8 @@ class GameSettings:
     jump_velocity_y: float =  200.0  # Initial jump velocity in y direction
     jump_velocity_x: float =  0  # Initial jump velocity in x direction
     d_t: float = 1.0/30  # Time step for physics calculations
-    x_speed = 14
+    x_speed = 10
+    
 
 # Initialize Pygame
 pygame.init()
@@ -52,19 +53,35 @@ clock = pygame.time.Clock()
 velocity_y = 0
 velocity_x = 0
 d_x = 0
-while running:
+jump_velocity_y = 200
+yesjump = input("Do you want to auto jump? Yes or no? Please type yes or no.\n By the way, it wont work if you type in an invalid option.")
+print("Ok")
 
+while running:
+    
+    
+    jump_velocity_yy = settings.jump_velocity_y * 0.99955
+    settings.jump_velocity_y = jump_velocity_yy
     # Handle events, such as quitting the game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
     # Continuously jump. If the square is not jumping, make it jump
-    if is_jumping is False:
+    if is_jumping is False and yesjump == ("no"):
     
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] :
+        # Jumping means that the square is going up. The top of the 
+        # screen is y=0, and the bottom is y=screen_height. So, to go up,
+        # we need to have a negative y velocity
+
+            velocity_y = -settings.jump_velocity_y
+            velocity_x = settings.jump_velocity_x * x_direction
+            is_jumping = True
+    if is_jumping is False and yesjump == ("yes"):
+    
         # Jumping means that the square is going up. The top of the 
         # screen is y=0, and the bottom is y=screen_height. So, to go up,
         # we need to have a negative y velocity
