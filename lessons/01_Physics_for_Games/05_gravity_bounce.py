@@ -53,7 +53,7 @@ clock = pygame.time.Clock()
 velocity_y = 0
 velocity_x = 0
 d_x = 0
-jump_velocity_y = 200
+jump_velocity_y = 400
 yesjump = input("Do you want to auto jump? Yes or no? Please type yes or no.\n By the way, it wont work if you type in an invalid option.")
 print("Ok")
 
@@ -141,7 +141,7 @@ while running:
                         
             
        
-    acceleration = .1
+    acceleration = 1
     keys = pygame.key.get_pressed()
     
         
