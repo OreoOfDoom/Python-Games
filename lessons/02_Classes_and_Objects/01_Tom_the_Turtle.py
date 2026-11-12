@@ -41,33 +41,33 @@ def event_loop():
 
 
 class Turtle:
-    def __init__(self, screen, x: int, y: int):
-        self.x = x
-        self.y = y
-        self.screen = screen
-        self.angle = 0  # Angle in degrees, starting facing right
+    def __init__(a2, screen, x: int, y: int):
+        a2.x = x
+        a2.y = y
+        a2.screen = screen
+        a2.angle = 0  # Angle in degrees, starting facing right
 
-    def forward(self, distance):
+    def forward(a2, distance):
         # Calculate new position based on current angle
-        radian_angle = math.radians(self.angle)
+        radian_angle = math.radians(a2.angle)
 
-        start_x = self.x  # Save the starting position
-        start_y = self.y
+        start_x = a2.x  # Save the starting position
+        start_y = a2.y
 
         # Calculate the new position displacement
         dx = math.cos(radian_angle) * distance
         dy = math.sin(radian_angle) * distance
 
         # Update the turtle's position
-        self.x += dx
-        self.y -= dy
+        a2.x += dx
+        a2.y -= dy
 
         # Draw line to the new position
-        pygame.draw.line(self.screen, black, (start_x, start_y), (self.x, self.y), 2)
+        pygame.draw.line(a2.screen, black, (start_x, start_y), (a2.x, a2.y), 2)
 
-    def left(self, angle):
+    def left(a2, angle):
         # Turn left by adjusting the angle counterclockwise
-        self.angle = (self.angle + angle) % 360
+        a2.angle = (a2.angle + angle) % 360
 # def alien (name,legs,eyes,color):
     
 #     alien = Turtle

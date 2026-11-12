@@ -12,44 +12,44 @@ class Meteor(pygame.sprite.Sprite):
         pygame.image.load('resources/meteors/spaceMeteors_004.png'),
     ]
 
-    def __init__(self, x, y):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = random.choice(Meteor.meteors)
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
-        self._off_screen = False
-        self._veloc_x = random.uniform(-3, 3)
-        self._veloc_y = random.uniform(0, 3)
-        self._x_pixels_to_move = 0
-        self._y_pixels_to_move = 0
+    def __init__(a2, x, y):
+        pygame.sprite.Sprite.__init__(a2)
+        a2.image = random.choice(Meteor.meteors)
+        a2.rect = a2.image.get_rect()
+        a2.rect.center = (x, y)
+        a2._off_screen = False
+        a2._veloc_x = random.uniform(-3, 3)
+        a2._veloc_y = random.uniform(0, 3)
+        a2._x_pixels_to_move = 0
+        a2._y_pixels_to_move = 0
 
-    def is_off_screen(self):
+    def is_off_screen(a2):
         """Returns True if the meteor is not on the screen anymore."""
-        return self._off_screen
+        return a2._off_screen
 
-    def move(self):
+    def move(a2):
         """X and Y velocities are added up on every tick. Once they are greater than 1.0 or less than -1.0
            - ergo one pixel on screen, the meteor moves by an integer in the appropriate direction."""
-        self._x_pixels_to_move += self._veloc_x
-        self._y_pixels_to_move += self._veloc_y
+        a2._x_pixels_to_move += a2._veloc_x
+        a2._y_pixels_to_move += a2._veloc_y
 
         # move right
-        if self._x_pixels_to_move > 1:
-            self.rect.move_ip(self._x_pixels_to_move, 0)
-            self._x_pixels_to_move -= int(self._x_pixels_to_move)
+        if a2._x_pixels_to_move > 1:
+            a2.rect.move_ip(a2._x_pixels_to_move, 0)
+            a2._x_pixels_to_move -= int(a2._x_pixels_to_move)
         # move left
-        elif self._x_pixels_to_move < -1:
-            self.rect.move_ip(self._x_pixels_to_move, 0)
-            self._x_pixels_to_move += int(abs(self._x_pixels_to_move))
+        elif a2._x_pixels_to_move < -1:
+            a2.rect.move_ip(a2._x_pixels_to_move, 0)
+            a2._x_pixels_to_move += int(abs(a2._x_pixels_to_move))
 
         # move down
-        if self._y_pixels_to_move > 1:
-            self.rect.move_ip(0, self._y_pixels_to_move)
-            self._y_pixels_to_move -= int(self._y_pixels_to_move)
+        if a2._y_pixels_to_move > 1:
+            a2.rect.move_ip(0, a2._y_pixels_to_move)
+            a2._y_pixels_to_move -= int(a2._y_pixels_to_move)
 
-    def update(self, *args):
+    def update(a2, *args):
         """Operations executed on every tick."""
-        self.move()
+        a2.move()
         # delete meteor if it flies off the screen or hits surface
-        if self.rect.top > HEIGHT or self.rect.left > WIDTH or self.rect.right < 0:
-            self._off_screen = True
+        if a2.rect.top > HEIGHT or a2.rect.left > WIDTH or a2.rect.right < 0:
+            a2._off_screen = True

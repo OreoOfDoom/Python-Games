@@ -44,54 +44,54 @@ font = pygame.font.SysFont(None, 36)
 
 # Define an obstacle class
 class Obstacle(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(a2):
         super().__init__()
-        self.image = pygame.Surface((OBSTACLE_WIDTH, OBSTACLE_HEIGHT))
-        self.image.fill(BLACK)
-        self.rect = self.image.get_rect()
-        self.rect.x = WIDTH
-        self.rect.y = HEIGHT - OBSTACLE_HEIGHT - 10
+        a2.image = pygame.Surface((OBSTACLE_WIDTH, OBSTACLE_HEIGHT))
+        a2.image.fill(BLACK)
+        a2.rect = a2.image.get_rect()
+        a2.rect.x = WIDTH
+        a2.rect.y = HEIGHT - OBSTACLE_HEIGHT - 10
 
-        self.explosion = pygame.image.load(images_dir / "explosion1.gif")
+        a2.explosion = pygame.image.load(images_dir / "explosion1.gif")
 
-    def update(self):
-        self.rect.x -= obstacle_speed
+    def update(a2):
+        a2.rect.x -= obstacle_speed
         # Remove the obstacle if it goes off screen
-        if self.rect.right < 0:
-            self.kill()
+        if a2.rect.right < 0:
+            a2.kill()
 
-    def explode(self):
+    def explode(a2):
         """Replace the image with an explosition image."""
         
         # Load the explosion image
-        self.image = self.explosion
-        self.image = pygame.transform.scale(self.image, (OBSTACLE_WIDTH, OBSTACLE_HEIGHT))
-        self.rect = self.image.get_rect(center=self.rect.center)
+        a2.image = a2.explosion
+        a2.image = pygame.transform.scale(a2.image, (OBSTACLE_WIDTH, OBSTACLE_HEIGHT))
+        a2.rect = a2.image.get_rect(center=a2.rect.center)
 
 
 # Define a player class
 class Player(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(a2):
         super().__init__()
-        self.image = pygame.Surface((PLAYER_SIZE, PLAYER_SIZE))
-        self.image.fill(BLUE)
-        self.rect = self.image.get_rect()
-        self.rect.x = 50
-        self.rect.y = HEIGHT - PLAYER_SIZE - 10
-        self.speed = player_speed
+        a2.image = pygame.Surface((PLAYER_SIZE, PLAYER_SIZE))
+        a2.image.fill(BLUE)
+        a2.rect = a2.image.get_rect()
+        a2.rect.x = 50
+        a2.rect.y = HEIGHT - PLAYER_SIZE - 10
+        a2.speed = player_speed
 
-    def update(self):
+    def update(a2):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
-            self.rect.y -= self.speed
+            a2.rect.y -= a2.speed
         if keys[pygame.K_DOWN]:
-            self.rect.y += self.speed
+            a2.rect.y += a2.speed
 
         # Keep the player on screen
-        if self.rect.top < 0:
-            self.rect.top = 0
-        if self.rect.bottom > HEIGHT:
-            self.rect.bottom = HEIGHT
+        if a2.rect.top < 0:
+            a2.rect.top = 0
+        if a2.rect.bottom > HEIGHT:
+            a2.rect.bottom = HEIGHT
 
 # Create a player object
 player = Player()

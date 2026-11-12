@@ -8,58 +8,58 @@ images  = Path(__file__).parent / 'images'
 class TestSpriteSheet(unittest.TestCase):
     """Tests for the SpriteSheet class."""
 
-    def setUp(self):
+    def setUp(a2):
         """Set up test variables."""
         pygame.init()
-        self.filename = images/'spritesheet.png'
-        self.cellsize = (16, 16)
+        a2.filename = images/'spritesheet.png'
+        a2.cellsize = (16, 16)
         
         pygame.init()
         screen = pygame.display.set_mode((640, 480))
         
-        self.spritesheet = SpriteSheet(self.filename, self.cellsize)
+        a2.spritesheet = SpriteSheet(a2.filename, a2.cellsize)
 
-    def test_xy_to_index(self):
+    def test_xy_to_index(a2):
         """Test the xy_to_index method."""
-        self.assertEqual(self.spritesheet.xy_to_index(0, 0), 0)
-        self.assertEqual(self.spritesheet.xy_to_index(1, 1), 9)
-        self.assertEqual(self.spritesheet.xy_to_index(0, 4), 32)
+        a2.assertEqual(a2.spritesheet.xy_to_index(0, 0), 0)
+        a2.assertEqual(a2.spritesheet.xy_to_index(1, 1), 9)
+        a2.assertEqual(a2.spritesheet.xy_to_index(0, 4), 32)
 
-    def test_index_to_xy(self):
+    def test_index_to_xy(a2):
         """Test the index_to_xy method."""
-        self.assertEqual(self.spritesheet.index_to_xy(10), (10 % (self.spritesheet.sheet.get_width() // self.cellsize[0]), 10 // (self.spritesheet.sheet.get_width() // self.cellsize[0])))
+        a2.assertEqual(a2.spritesheet.index_to_xy(10), (10 % (a2.spritesheet.sheet.get_width() // a2.cellsize[0]), 10 // (a2.spritesheet.sheet.get_width() // a2.cellsize[0])))
 
-    def test_image_at(self):
+    def test_image_at(a2):
         """Test the image_at method."""
-        image = self.spritesheet.image_at((0, 0))
-        self.assertIsInstance(image, pygame.Surface)
+        image = a2.spritesheet.image_at((0, 0))
+        a2.assertIsInstance(image, pygame.Surface)
 
-    def test_num_sprites(self):
+    def test_num_sprites(a2):
         """Test the num_sprites property."""
-        self.assertEqual(self.spritesheet.num_sprites, (self.spritesheet.sheet.get_width() // self.cellsize[0]) * (self.spritesheet.sheet.get_height() // self.cellsize[1]))
+        a2.assertEqual(a2.spritesheet.num_sprites, (a2.spritesheet.sheet.get_width() // a2.cellsize[0]) * (a2.spritesheet.sheet.get_height() // a2.cellsize[1]))
 
-    def test_size(self):
+    def test_size(a2):
         """Test the size property."""
-        self.assertEqual(self.spritesheet.size, (self.spritesheet.sheet.get_width() // self.cellsize[0], self.spritesheet.sheet.get_height() // self.cellsize[1]))
+        a2.assertEqual(a2.spritesheet.size, (a2.spritesheet.sheet.get_width() // a2.cellsize[0], a2.spritesheet.sheet.get_height() // a2.cellsize[1]))
 
-    def test_images_at(self):
+    def test_images_at(a2):
         """Test the images_at method."""
 
-        images = self.spritesheet.images_at([(0, 0), (1, 1)])
-        self.assertEqual(len(images), 2)
-        self.assertIsInstance(images[0], pygame.Surface)
-        self.assertIsInstance(images[1], pygame.Surface)
+        images = a2.spritesheet.images_at([(0, 0), (1, 1)])
+        a2.assertEqual(len(images), 2)
+        a2.assertIsInstance(images[0], pygame.Surface)
+        a2.assertIsInstance(images[1], pygame.Surface)
 
-    def test_load_strip(self):
+    def test_load_strip(a2):
         """Test the load_strip method."""
         
-        images = self.spritesheet.load_strip((0, 0), 3)
-        self.assertEqual(len(images), 3)
-        self.assertIsInstance(images[0], pygame.Surface)
-        self.assertIsInstance(images[1], pygame.Surface)
-        self.assertIsInstance(images[2], pygame.Surface)
+        images = a2.spritesheet.load_strip((0, 0), 3)
+        a2.assertEqual(len(images), 3)
+        a2.assertIsInstance(images[0], pygame.Surface)
+        a2.assertIsInstance(images[1], pygame.Surface)
+        a2.assertIsInstance(images[2], pygame.Surface)
 
-    def tearDown(self):
+    def tearDown(a2):
         """Clean up after tests."""
         pygame.quit()
 

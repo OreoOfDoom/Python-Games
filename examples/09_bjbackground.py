@@ -29,103 +29,103 @@ pygame.display.set_caption("Endless Runner")
 # Define background class
 class Background(pygame.sprite.Sprite):
     """Represents the scrolling background in the game."""
-    def __init__(self):
+    def __init__(a2):
         super().__init__()
         
         # The Sprite image is 2x as wide as the screen
-        self.image = pygame.Surface((Settings.SCREEN_WIDTH * 2, Settings.SCREEN_HEIGHT))
+        a2.image = pygame.Surface((Settings.SCREEN_WIDTH * 2, Settings.SCREEN_HEIGHT))
         
         # Load the background image and scale it to the screen size. Note the convert() call. 
         # This converts the form of the image to be more efficient. 
         orig_image= pygame.image.load(d/'assets/background.png').convert()
         orig_image = pygame.transform.scale(orig_image, (Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT))
         
-        # Then, copy it into the self.image surface twice
-        self.image.blit(orig_image, (0, 0))
-        self.image.blit(orig_image, (Settings.SCREEN_WIDTH, 0))
+        # Then, copy it into the a2.image surface twice
+        a2.image.blit(orig_image, (0, 0))
+        a2.image.blit(orig_image, (Settings.SCREEN_WIDTH, 0))
         
-        self.rect = self.image.get_rect()
-        self.rect.x = 0
-        self.rect.y = 0
+        a2.rect = a2.image.get_rect()
+        a2.rect.x = 0
+        a2.rect.y = 0
 
-    def update(self):
+    def update(a2):
         """Update the position of the background."""
         
-        self.rect.x -= Settings.BACKGROUND_SCROLL_SPEED
+        a2.rect.x -= Settings.BACKGROUND_SCROLL_SPEED
         
-        if self.rect.right <= Settings.SCREEN_WIDTH:
-            self.rect.x = 0
+        if a2.rect.right <= Settings.SCREEN_WIDTH:
+            a2.rect.x = 0
 
 # Define player class
 class Player(pygame.sprite.Sprite):
     """Represents the player in the game."""
-    def __init__(self):
+    def __init__(a2):
         super().__init__()
-        self.image = pygame.Surface((Settings.PLAYER_SIZE, Settings.PLAYER_SIZE))
-        self.image.fill(Settings.BLACK)
-        self.rect = self.image.get_rect()
-        self.rect.x = 100
-        self.rect.y = Settings.SCREEN_HEIGHT - Settings.PLAYER_SIZE
-        self.y_velocity = 0
-        self.is_jumping = False
+        a2.image = pygame.Surface((Settings.PLAYER_SIZE, Settings.PLAYER_SIZE))
+        a2.image.fill(Settings.BLACK)
+        a2.rect = a2.image.get_rect()
+        a2.rect.x = 100
+        a2.rect.y = Settings.SCREEN_HEIGHT - Settings.PLAYER_SIZE
+        a2.y_velocity = 0
+        a2.is_jumping = False
 
-    def update(self):
+    def update(a2):
         """Update the player's position."""
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE] and not self.is_jumping:
-            self.y_velocity = -Settings.JUMP_STRENGTH
-            self.is_jumping = True
+        if keys[pygame.K_SPACE] and not a2.is_jumping:
+            a2.y_velocity = -Settings.JUMP_STRENGTH
+            a2.is_jumping = True
 
-        self.y_velocity += Settings.GRAVITY
-        self.rect.y += self.y_velocity
+        a2.y_velocity += Settings.GRAVITY
+        a2.rect.y += a2.y_velocity
 
-        if self.rect.bottom >= Settings.SCREEN_HEIGHT:
-            self.rect.bottom = Settings.SCREEN_HEIGHT
-            self.y_velocity = 0
-            self.is_jumping = False
+        if a2.rect.bottom >= Settings.SCREEN_HEIGHT:
+            a2.rect.bottom = Settings.SCREEN_HEIGHT
+            a2.y_velocity = 0
+            a2.is_jumping = False
 
 
 class Obstacle(pygame.sprite.Sprite):
     """Represents an obstacle in the game."""
-    def __init__(self):
+    def __init__(a2):
         super().__init__()
-        self.image = pygame.Surface((Settings.OBSTACLE_WIDTH, Settings.OBSTACLE_HEIGHT))
-        self.image.fill(Settings.BLACK)
-        self.rect = self.image.get_rect()
-        self.rect.x = Settings.SCREEN_WIDTH
-        self.rect.y = Settings.SCREEN_HEIGHT - Settings.OBSTACLE_HEIGHT
+        a2.image = pygame.Surface((Settings.OBSTACLE_WIDTH, Settings.OBSTACLE_HEIGHT))
+        a2.image.fill(Settings.BLACK)
+        a2.rect = a2.image.get_rect()
+        a2.rect.x = Settings.SCREEN_WIDTH
+        a2.rect.y = Settings.SCREEN_HEIGHT - Settings.OBSTACLE_HEIGHT
 
-    def update(self):
+    def update(a2):
         """Update the position of the obstacle."""
-        self.rect.x -= Settings.OBSTACLE_SPEED
-        if self.rect.x + Settings.OBSTACLE_WIDTH <= 0:
-            self.kill()
+        a2.rect.x -= Settings.OBSTACLE_SPEED
+        if a2.rect.x + Settings.OBSTACLE_WIDTH <= 0:
+            a2.kill()
 
 
 class Game:
     """Represents the main game."""
-    def __init__(self):
+    def __init__(a2):
         """Initialize the game, create game objects, and set up the game environment."""
         # Create sprite groups
-        self.all_sprites = pygame.sprite.Group()
-        self.obstacles = pygame.sprite.Group()
+        a2.all_sprites = pygame.sprite.Group()
+        a2.obstacles = pygame.sprite.Group()
 
         # Create background instance and add to sprite group
-        self.background = Background()
-        self.all_sprites.add(self.background)
+        a2.background = Background()
+        a2.all_sprites.add(a2.background)
 
         # Create player instance and add to sprite group
-        self.player = Player()
-        self.all_sprites.add(self.player)
+        a2.player = Player()
+        a2.all_sprites.add(a2.player)
 
         # Score
-        self.score = 0
-        self.font = pygame.font.SysFont(None, 48)
+        a2.score = 0
+        a2.font = pygame.font.SysFont(None, 48)
 
         # Clock
-        self.clock = pygame.time.Clock()
+        a2.clock = pygame.time.Clock()
 
-    def run(self):
+    def run(a2):
         """Run the main game loop."""
         running = True
         obstacle_counter = 0 #Enforce a min number of frames between obstacles. 
@@ -135,10 +135,10 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
 
-            self.all_sprites.update()
+            a2.all_sprites.update()
 
             # Draw everything
-            self.all_sprites.draw(screen)
+            a2.all_sprites.draw(screen)
 
             # Spawn obstacles. The `obstacle_counter` is used to enforce a
             # minimum number of frames between obstacles. The  `
@@ -148,23 +148,23 @@ class Game:
             # has a 40% chance of spawning an obstacle every 30 frames.
             if random.random() <= .4 and obstacle_counter % 30 == 0:
                 obstacle = Obstacle()
-                self.obstacles.add(obstacle)
-                self.all_sprites.add(obstacle)
+                a2.obstacles.add(obstacle)
+                a2.all_sprites.add(obstacle)
           
             obstacle_counter += 1
 
             # Check for collisions
-            if (collider := pygame.sprite.spritecollideany(self.player, self.obstacles)):
+            if (collider := pygame.sprite.spritecollideany(a2.player, a2.obstacles)):
                 collider.image.fill((255, 0, 0))  # Make sprites red when they collide
 
             # Draw score
-            self.score += 1
-            score_text = self.font.render(f"Score: {self.score}", True, Settings.BLACK)
+            a2.score += 1
+            score_text = a2.font.render(f"Score: {a2.score}", True, Settings.BLACK)
             screen.blit(score_text, (10, 10))
 
             pygame.display.flip()
             
-            self.clock.tick(Settings.FPS)
+            a2.clock.tick(Settings.FPS)
 
         pygame.quit()
 

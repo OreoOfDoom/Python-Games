@@ -28,32 +28,32 @@ pygame.display.set_caption("Background Scroll")
 # Define background class
 class Background(pygame.sprite.Sprite):
     """Represents the scrolling background in the game."""
-    def __init__(self):
+    def __init__(a2):
         super().__init__()
         
         # The Sprite image is 2x as wide as the screen
-        self.image = pygame.Surface((Settings.SCREEN_WIDTH * 2, Settings.SCREEN_HEIGHT))
+        a2.image = pygame.Surface((Settings.SCREEN_WIDTH * 2, Settings.SCREEN_HEIGHT))
         
         # Load the background image and scale it to the screen size. Note the convert() call. 
         # This converts the form of the image to be more efficient. 
         orig_image= pygame.image.load(d/'images/background_scroll.png').convert()
         orig_image = pygame.transform.scale(orig_image, (Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT))
         
-        # Then, copy it into the self.image surface twice
-        self.image.blit(orig_image, (0, 0))
-        self.image.blit(orig_image, (Settings.SCREEN_WIDTH, 0))
+        # Then, copy it into the a2.image surface twice
+        a2.image.blit(orig_image, (0, 0))
+        a2.image.blit(orig_image, (Settings.SCREEN_WIDTH, 0))
         
-        self.rect = self.image.get_rect()
-        self.rect.x = 0
-        self.rect.y = 0
+        a2.rect = a2.image.get_rect()
+        a2.rect.x = 0
+        a2.rect.y = 0
 
-    def update(self):
+    def update(a2):
         """Update the position of the background."""
         
-        self.rect.x -= Settings.BACKGROUND_SCROLL_SPEED
+        a2.rect.x -= Settings.BACKGROUND_SCROLL_SPEED
         
-        if self.rect.right <= Settings.SCREEN_WIDTH:
-            self.rect.x = 0
+        if a2.rect.right <= Settings.SCREEN_WIDTH:
+            a2.rect.x = 0
 
 
 

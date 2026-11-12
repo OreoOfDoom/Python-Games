@@ -85,28 +85,28 @@ class Player(pg.sprite.Sprite):
     gun_offset = -11
     images: List[pg.Surface] = []
 
-    def __init__(self, *groups):
-        pg.sprite.Sprite.__init__(self, *groups)
-        self.image = self.images[0]
-        self.rect = self.image.get_rect(midbottom=SCREENRECT.midbottom)
-        self.reloading = 0
-        self.origtop = self.rect.top
-        self.facing = -1
+    def __init__(a2, *groups):
+        pg.sprite.Sprite.__init__(a2, *groups)
+        a2.image = a2.images[0]
+        a2.rect = a2.image.get_rect(midbottom=SCREENRECT.midbottom)
+        a2.reloading = 0
+        a2.origtop = a2.rect.top
+        a2.facing = -1
 
-    def move(self, direction):
+    def move(a2, direction):
         if direction:
-            self.facing = direction
-        self.rect.move_ip(direction * self.speed, 0)
-        self.rect = self.rect.clamp(SCREENRECT)
+            a2.facing = direction
+        a2.rect.move_ip(direction * a2.speed, 0)
+        a2.rect = a2.rect.clamp(SCREENRECT)
         if direction < 0:
-            self.image = self.images[0]
+            a2.image = a2.images[0]
         elif direction > 0:
-            self.image = self.images[1]
-        self.rect.top = self.origtop - (self.rect.left // self.bounce % 2)
+            a2.image = a2.images[1]
+        a2.rect.top = a2.origtop - (a2.rect.left // a2.bounce % 2)
 
-    def gunpos(self):
-        pos = self.facing * self.gun_offset + self.rect.centerx
-        return pos, self.rect.top
+    def gunpos(a2):
+        pos = a2.facing * a2.gun_offset + a2.rect.centerx
+        return pos, a2.rect.top
 
 
 class Alien(pg.sprite.Sprite):
@@ -116,23 +116,23 @@ class Alien(pg.sprite.Sprite):
     animcycle = 12
     images: List[pg.Surface] = []
 
-    def __init__(self, *groups):
-        pg.sprite.Sprite.__init__(self, *groups)
-        self.image = self.images[0]
-        self.rect = self.image.get_rect()
-        self.facing = random.choice((-1, 1)) * Alien.speed
-        self.frame = 0
-        if self.facing < 0:
-            self.rect.right = SCREENRECT.right
+    def __init__(a2, *groups):
+        pg.sprite.Sprite.__init__(a2, *groups)
+        a2.image = a2.images[0]
+        a2.rect = a2.image.get_rect()
+        a2.facing = random.choice((-1, 1)) * Alien.speed
+        a2.frame = 0
+        if a2.facing < 0:
+            a2.rect.right = SCREENRECT.right
 
-    def update(self, *args, **kwargs):
-        self.rect.move_ip(self.facing, 0)
-        if not SCREENRECT.contains(self.rect):
-            self.facing = -self.facing
-            self.rect.top = self.rect.bottom + 1
-            self.rect = self.rect.clamp(SCREENRECT)
-        self.frame = self.frame + 1
-        self.image = self.images[self.frame // self.animcycle % 3]
+    def update(a2, *args, **kwargs):
+        a2.rect.move_ip(a2.facing, 0)
+        if not SCREENRECT.contains(a2.rect):
+            a2.facing = -a2.facing
+            a2.rect.top = a2.rect.bottom + 1
+            a2.rect = a2.rect.clamp(SCREENRECT)
+        a2.frame = a2.frame + 1
+        a2.image = a2.images[a2.frame // a2.animcycle % 3]
 
 
 class Explosion(pg.sprite.Sprite):
@@ -142,13 +142,13 @@ class Explosion(pg.sprite.Sprite):
     animcycle = 3
     images: List[pg.Surface] = []
 
-    def __init__(self, actor, *groups):
-        pg.sprite.Sprite.__init__(self, *groups)
-        self.image = self.images[0]
-        self.rect = self.image.get_rect(center=actor.rect.center)
-        self.life = self.defaultlife
+    def __init__(a2, actor, *groups):
+        pg.sprite.Sprite.__init__(a2, *groups)
+        a2.image = a2.images[0]
+        a2.rect = a2.image.get_rect(center=actor.rect.center)
+        a2.life = a2.defaultlife
 
-    def update(self, *args, **kwargs):
+    def update(a2, *args, **kwargs):
         """called every time around the game loop.
 
         Show the explosion surface for 'defaultlife'.
@@ -156,10 +156,10 @@ class Explosion(pg.sprite.Sprite):
 
         Also we animate the explosion.
         """
-        self.life = self.life - 1
-        self.image = self.images[self.life // self.animcycle % 2]
-        if self.life <= 0:
-            self.kill()
+        a2.life = a2.life - 1
+        a2.image = a2.images[a2.life // a2.animcycle % 2]
+        if a2.life <= 0:
+            a2.kill()
 
 
 class Shot(pg.sprite.Sprite):
@@ -168,19 +168,19 @@ class Shot(pg.sprite.Sprite):
     speed = -11
     images: List[pg.Surface] = []
 
-    def __init__(self, pos, *groups):
-        pg.sprite.Sprite.__init__(self, *groups)
-        self.image = self.images[0]
-        self.rect = self.image.get_rect(midbottom=pos)
+    def __init__(a2, pos, *groups):
+        pg.sprite.Sprite.__init__(a2, *groups)
+        a2.image = a2.images[0]
+        a2.rect = a2.image.get_rect(midbottom=pos)
 
-    def update(self, *args, **kwargs):
+    def update(a2, *args, **kwargs):
         """called every time around the game loop.
 
         Every tick we move the shot upwards.
         """
-        self.rect.move_ip(0, self.speed)
-        if self.rect.top <= 0:
-            self.kill()
+        a2.rect.move_ip(0, a2.speed)
+        if a2.rect.top <= 0:
+            a2.kill()
 
 
 class Bomb(pg.sprite.Sprite):
@@ -189,13 +189,13 @@ class Bomb(pg.sprite.Sprite):
     speed = 9
     images: List[pg.Surface] = []
 
-    def __init__(self, alien, explosion_group, *groups):
-        pg.sprite.Sprite.__init__(self, *groups)
-        self.image = self.images[0]
-        self.rect = self.image.get_rect(midbottom=alien.rect.move(0, 5).midbottom)
-        self.explosion_group = explosion_group
+    def __init__(a2, alien, explosion_group, *groups):
+        pg.sprite.Sprite.__init__(a2, *groups)
+        a2.image = a2.images[0]
+        a2.rect = a2.image.get_rect(midbottom=alien.rect.move(0, 5).midbottom)
+        a2.explosion_group = explosion_group
 
-    def update(self, *args, **kwargs):
+    def update(a2, *args, **kwargs):
         """called every time around the game loop.
 
         Every frame we move the sprite 'rect' down.
@@ -204,30 +204,30 @@ class Bomb(pg.sprite.Sprite):
         - make an explosion.
         - remove the Bomb.
         """
-        self.rect.move_ip(0, self.speed)
-        if self.rect.bottom >= 470:
-            Explosion(self, self.explosion_group)
-            self.kill()
+        a2.rect.move_ip(0, a2.speed)
+        if a2.rect.bottom >= 470:
+            Explosion(a2, a2.explosion_group)
+            a2.kill()
 
 
 class Score(pg.sprite.Sprite):
     """to keep track of the score."""
 
-    def __init__(self, *groups):
-        pg.sprite.Sprite.__init__(self, *groups)
-        self.font = pg.font.Font(None, 20)
-        self.font.set_italic(1)
-        self.color = "white"
-        self.lastscore = -1
-        self.update()
-        self.rect = self.image.get_rect().move(10, 450)
+    def __init__(a2, *groups):
+        pg.sprite.Sprite.__init__(a2, *groups)
+        a2.font = pg.font.Font(None, 20)
+        a2.font.set_italic(1)
+        a2.color = "white"
+        a2.lastscore = -1
+        a2.update()
+        a2.rect = a2.image.get_rect().move(10, 450)
 
-    def update(self, *args, **kwargs):
+    def update(a2, *args, **kwargs):
         """We only update the score in update() when it has changed."""
-        if SCORE != self.lastscore:
-            self.lastscore = SCORE
+        if SCORE != a2.lastscore:
+            a2.lastscore = SCORE
             msg = f"Score: {SCORE}"
-            self.image = self.font.render(msg, 0, self.color)
+            a2.image = a2.font.render(msg, 0, a2.color)
 
 
 def main(winstyle=0):

@@ -56,58 +56,58 @@ DIFFICULTY_LEVEL = 5  # a value between 1 to 10 - number of enemy bullets
 
 
 class Ship(sprite.Sprite):
-    def __init__(self):
-        sprite.Sprite.__init__(self)
-        self.image = IMAGES["ship"]
-        self.rect = self.image.get_rect(topleft=(375, 540))
-        self.speed = 5
+    def __init__(a2):
+        sprite.Sprite.__init__(a2)
+        a2.image = IMAGES["ship"]
+        a2.rect = a2.image.get_rect(topleft=(375, 540))
+        a2.speed = 5
 
-    def update(self, keys, *args):
-        if keys[K_LEFT] and self.rect.x > 10:
-            self.rect.x -= self.speed
-        if keys[K_RIGHT] and self.rect.x < 740:
-            self.rect.x += self.speed
-        game.screen.blit(self.image, self.rect)
+    def update(a2, keys, *args):
+        if keys[K_LEFT] and a2.rect.x > 10:
+            a2.rect.x -= a2.speed
+        if keys[K_RIGHT] and a2.rect.x < 740:
+            a2.rect.x += a2.speed
+        game.screen.blit(a2.image, a2.rect)
 
 
 class Bullet(sprite.Sprite):
-    def __init__(self, xpos, ypos, direction, speed, filename, side):
-        sprite.Sprite.__init__(self)
-        self.image = IMAGES[filename]
-        self.rect = self.image.get_rect(topleft=(xpos, ypos))
-        self.speed = speed
-        self.direction = direction
-        self.side = side
-        self.filename = filename
+    def __init__(a2, xpos, ypos, direction, speed, filename, side):
+        sprite.Sprite.__init__(a2)
+        a2.image = IMAGES[filename]
+        a2.rect = a2.image.get_rect(topleft=(xpos, ypos))
+        a2.speed = speed
+        a2.direction = direction
+        a2.side = side
+        a2.filename = filename
 
-    def update(self, keys, *args):
-        game.screen.blit(self.image, self.rect)
-        self.rect.y += self.speed * self.direction
-        if self.rect.y < 15 or self.rect.y > 600:
-            self.kill()
+    def update(a2, keys, *args):
+        game.screen.blit(a2.image, a2.rect)
+        a2.rect.y += a2.speed * a2.direction
+        if a2.rect.y < 15 or a2.rect.y > 600:
+            a2.kill()
 
 
 class Enemy(sprite.Sprite):
-    def __init__(self, row, column):
-        sprite.Sprite.__init__(self)
-        self.row = row
-        self.column = column
-        self.images = []
-        self.load_images()
-        self.index = 0
-        self.image = self.images[self.index]
-        self.rect = self.image.get_rect()
+    def __init__(a2, row, column):
+        sprite.Sprite.__init__(a2)
+        a2.row = row
+        a2.column = column
+        a2.images = []
+        a2.load_images()
+        a2.index = 0
+        a2.image = a2.images[a2.index]
+        a2.rect = a2.image.get_rect()
 
-    def toggle_image(self):
-        self.index += 1
-        if self.index >= len(self.images):
-            self.index = 0
-        self.image = self.images[self.index]
+    def toggle_image(a2):
+        a2.index += 1
+        if a2.index >= len(a2.images):
+            a2.index = 0
+        a2.image = a2.images[a2.index]
 
-    def update(self, *args):
-        game.screen.blit(self.image, self.rect)
+    def update(a2, *args):
+        game.screen.blit(a2.image, a2.rect)
 
-    def load_images(self):
+    def load_images(a2):
         images = {
             0: ["1_2", "1_1"],
             1: ["2_2", "2_1"],
@@ -115,291 +115,291 @@ class Enemy(sprite.Sprite):
             3: ["3_1", "3_2"],
             4: ["3_1", "3_2"],
         }
-        img1, img2 = (IMAGES["enemy{}".format(img_num)] for img_num in images[self.row])
-        self.images.append(transform.scale(img1, (40, 35)))
-        self.images.append(transform.scale(img2, (40, 35)))
+        img1, img2 = (IMAGES["enemy{}".format(img_num)] for img_num in images[a2.row])
+        a2.images.append(transform.scale(img1, (40, 35)))
+        a2.images.append(transform.scale(img2, (40, 35)))
 
 
 class EnemiesGroup(sprite.Group):
-    def __init__(self, columns, rows):
-        sprite.Group.__init__(self)
-        self.enemies = [[None] * columns for _ in range(rows)]
-        self.columns = columns
-        self.rows = rows
-        self.leftAddMove = 0
-        self.rightAddMove = 0
-        self.moveTime = 600
-        self.direction = 1
-        self.rightMoves = 30
-        self.leftMoves = 30
-        self.moveNumber = 15
-        self.timer = time.get_ticks()
-        self.bottom = game.enemyPosition + ((rows - 1) * 45) + 35
-        self._aliveColumns = list(range(columns))
-        self._leftAliveColumn = 0
-        self._rightAliveColumn = columns - 1
+    def __init__(a2, columns, rows):
+        sprite.Group.__init__(a2)
+        a2.enemies = [[None] * columns for _ in range(rows)]
+        a2.columns = columns
+        a2.rows = rows
+        a2.leftAddMove = 0
+        a2.rightAddMove = 0
+        a2.moveTime = 600
+        a2.direction = 1
+        a2.rightMoves = 30
+        a2.leftMoves = 30
+        a2.moveNumber = 15
+        a2.timer = time.get_ticks()
+        a2.bottom = game.enemyPosition + ((rows - 1) * 45) + 35
+        a2._aliveColumns = list(range(columns))
+        a2._leftAliveColumn = 0
+        a2._rightAliveColumn = columns - 1
 
-    def update(self, current_time):
-        if current_time - self.timer > self.moveTime:
-            if self.direction == 1:
-                max_move = self.rightMoves + self.rightAddMove
+    def update(a2, current_time):
+        if current_time - a2.timer > a2.moveTime:
+            if a2.direction == 1:
+                max_move = a2.rightMoves + a2.rightAddMove
             else:
-                max_move = self.leftMoves + self.leftAddMove
+                max_move = a2.leftMoves + a2.leftAddMove
 
-            if self.moveNumber >= max_move:
-                self.leftMoves = 30 + self.rightAddMove
-                self.rightMoves = 30 + self.leftAddMove
-                self.direction *= -1
-                self.moveNumber = 0
-                self.bottom = 0
-                for enemy in self:
+            if a2.moveNumber >= max_move:
+                a2.leftMoves = 30 + a2.rightAddMove
+                a2.rightMoves = 30 + a2.leftAddMove
+                a2.direction *= -1
+                a2.moveNumber = 0
+                a2.bottom = 0
+                for enemy in a2:
                     enemy.rect.y += ENEMY_MOVE_DOWN
                     enemy.toggle_image()
-                    if self.bottom < enemy.rect.y + 35:
-                        self.bottom = enemy.rect.y + 35
+                    if a2.bottom < enemy.rect.y + 35:
+                        a2.bottom = enemy.rect.y + 35
             else:
-                velocity = 10 if self.direction == 1 else -10
-                for enemy in self:
+                velocity = 10 if a2.direction == 1 else -10
+                for enemy in a2:
                     enemy.rect.x += velocity
                     enemy.toggle_image()
-                self.moveNumber += 1
+                a2.moveNumber += 1
 
-            self.timer += self.moveTime
+            a2.timer += a2.moveTime
 
-    def add_internal(self, *sprites):
-        super(EnemiesGroup, self).add_internal(*sprites)
+    def add_internal(a2, *sprites):
+        super(EnemiesGroup, a2).add_internal(*sprites)
         for s in sprites:
-            self.enemies[s.row][s.column] = s
+            a2.enemies[s.row][s.column] = s
 
-    def remove_internal(self, *sprites):
-        super(EnemiesGroup, self).remove_internal(*sprites)
+    def remove_internal(a2, *sprites):
+        super(EnemiesGroup, a2).remove_internal(*sprites)
         for s in sprites:
-            self.kill(s)
-        self.update_speed()
+            a2.kill(s)
+        a2.update_speed()
 
-    def is_column_dead(self, column):
-        return not any(self.enemies[row][column] for row in range(self.rows))
+    def is_column_dead(a2, column):
+        return not any(a2.enemies[row][column] for row in range(a2.rows))
 
-    def random_bottom(self):
-        col = choice(self._aliveColumns)
-        col_enemies = (self.enemies[row - 1][col] for row in range(self.rows, 0, -1))
+    def random_bottom(a2):
+        col = choice(a2._aliveColumns)
+        col_enemies = (a2.enemies[row - 1][col] for row in range(a2.rows, 0, -1))
         return next((en for en in col_enemies if en is not None), None)
 
-    def update_speed(self):
-        if len(self) == 1:
-            self.moveTime = 200
-        elif len(self) <= 10:
-            self.moveTime = 400
+    def update_speed(a2):
+        if len(a2) == 1:
+            a2.moveTime = 200
+        elif len(a2) <= 10:
+            a2.moveTime = 400
 
-    def kill(self, enemy):
-        self.enemies[enemy.row][enemy.column] = None
-        is_column_dead = self.is_column_dead(enemy.column)
+    def kill(a2, enemy):
+        a2.enemies[enemy.row][enemy.column] = None
+        is_column_dead = a2.is_column_dead(enemy.column)
         if is_column_dead:
-            self._aliveColumns.remove(enemy.column)
+            a2._aliveColumns.remove(enemy.column)
 
-        if enemy.column == self._rightAliveColumn:
-            while self._rightAliveColumn > 0 and is_column_dead:
-                self._rightAliveColumn -= 1
-                self.rightAddMove += 5
-                is_column_dead = self.is_column_dead(self._rightAliveColumn)
+        if enemy.column == a2._rightAliveColumn:
+            while a2._rightAliveColumn > 0 and is_column_dead:
+                a2._rightAliveColumn -= 1
+                a2.rightAddMove += 5
+                is_column_dead = a2.is_column_dead(a2._rightAliveColumn)
 
-        elif enemy.column == self._leftAliveColumn:
-            while self._leftAliveColumn < self.columns and is_column_dead:
-                self._leftAliveColumn += 1
-                self.leftAddMove += 5
-                is_column_dead = self.is_column_dead(self._leftAliveColumn)
+        elif enemy.column == a2._leftAliveColumn:
+            while a2._leftAliveColumn < a2.columns and is_column_dead:
+                a2._leftAliveColumn += 1
+                a2.leftAddMove += 5
+                is_column_dead = a2.is_column_dead(a2._leftAliveColumn)
 
 
 class Blocker(sprite.Sprite):
-    def __init__(self, size, color, row, column):
-        sprite.Sprite.__init__(self)
-        self.height = size
-        self.width = size
-        self.color = color
-        self.image = Surface((self.width, self.height))
-        self.image.fill(self.color)
-        self.rect = self.image.get_rect()
-        self.row = row
-        self.column = column
+    def __init__(a2, size, color, row, column):
+        sprite.Sprite.__init__(a2)
+        a2.height = size
+        a2.width = size
+        a2.color = color
+        a2.image = Surface((a2.width, a2.height))
+        a2.image.fill(a2.color)
+        a2.rect = a2.image.get_rect()
+        a2.row = row
+        a2.column = column
 
-    def update(self, keys, *args):
-        game.screen.blit(self.image, self.rect)
+    def update(a2, keys, *args):
+        game.screen.blit(a2.image, a2.rect)
 
 
 class Mystery(sprite.Sprite):
-    def __init__(self):
-        sprite.Sprite.__init__(self)
-        self.image = IMAGES["mystery"]
-        self.image = transform.scale(self.image, (75, 35))
-        self.rect = self.image.get_rect(topleft=(-80, 45))
-        self.row = 5
-        self.moveTime = 25000
-        self.direction = 1
-        self.timer = time.get_ticks()
-        self.mysteryEntered = mixer.Sound(SOUND_PATH + f"mysteryentered.{SOUND_FORMAT}")
-        self.mysteryEntered.set_volume(0.3)
-        self.playSound = True
+    def __init__(a2):
+        sprite.Sprite.__init__(a2)
+        a2.image = IMAGES["mystery"]
+        a2.image = transform.scale(a2.image, (75, 35))
+        a2.rect = a2.image.get_rect(topleft=(-80, 45))
+        a2.row = 5
+        a2.moveTime = 25000
+        a2.direction = 1
+        a2.timer = time.get_ticks()
+        a2.mysteryEntered = mixer.Sound(SOUND_PATH + f"mysteryentered.{SOUND_FORMAT}")
+        a2.mysteryEntered.set_volume(0.3)
+        a2.playSound = True
 
-    def update(self, keys, currentTime, *args):
+    def update(a2, keys, currentTime, *args):
         resetTimer = False
-        passed = currentTime - self.timer
-        if passed > self.moveTime:
-            if (self.rect.x < 0 or self.rect.x > 800) and self.playSound:
-                self.mysteryEntered.play()
-                self.playSound = False
-            if self.rect.x < 840 and self.direction == 1:
-                self.mysteryEntered.fadeout(4000)
-                self.rect.x += 2
-                game.screen.blit(self.image, self.rect)
-            if self.rect.x > -100 and self.direction == -1:
-                self.mysteryEntered.fadeout(4000)
-                self.rect.x -= 2
-                game.screen.blit(self.image, self.rect)
+        passed = currentTime - a2.timer
+        if passed > a2.moveTime:
+            if (a2.rect.x < 0 or a2.rect.x > 800) and a2.playSound:
+                a2.mysteryEntered.play()
+                a2.playSound = False
+            if a2.rect.x < 840 and a2.direction == 1:
+                a2.mysteryEntered.fadeout(4000)
+                a2.rect.x += 2
+                game.screen.blit(a2.image, a2.rect)
+            if a2.rect.x > -100 and a2.direction == -1:
+                a2.mysteryEntered.fadeout(4000)
+                a2.rect.x -= 2
+                game.screen.blit(a2.image, a2.rect)
 
-        if self.rect.x > 830:
-            self.playSound = True
-            self.direction = -1
+        if a2.rect.x > 830:
+            a2.playSound = True
+            a2.direction = -1
             resetTimer = True
-        if self.rect.x < -90:
-            self.playSound = True
-            self.direction = 1
+        if a2.rect.x < -90:
+            a2.playSound = True
+            a2.direction = 1
             resetTimer = True
-        if passed > self.moveTime and resetTimer:
-            self.timer = currentTime
+        if passed > a2.moveTime and resetTimer:
+            a2.timer = currentTime
 
 
 class EnemyExplosion(sprite.Sprite):
-    def __init__(self, enemy, *groups):
-        super(EnemyExplosion, self).__init__(*groups)
-        self.image = transform.scale(self.get_image(enemy.row), (40, 35))
-        self.image2 = transform.scale(self.get_image(enemy.row), (50, 45))
-        self.rect = self.image.get_rect(topleft=(enemy.rect.x, enemy.rect.y))
-        self.timer = time.get_ticks()
+    def __init__(a2, enemy, *groups):
+        super(EnemyExplosion, a2).__init__(*groups)
+        a2.image = transform.scale(a2.get_image(enemy.row), (40, 35))
+        a2.image2 = transform.scale(a2.get_image(enemy.row), (50, 45))
+        a2.rect = a2.image.get_rect(topleft=(enemy.rect.x, enemy.rect.y))
+        a2.timer = time.get_ticks()
 
     @staticmethod
     def get_image(row):
         img_colors = ["purple", "blue", "blue", "green", "green"]
         return IMAGES["explosion{}".format(img_colors[row])]
 
-    def update(self, current_time, *args):
-        passed = current_time - self.timer
+    def update(a2, current_time, *args):
+        passed = current_time - a2.timer
         if passed <= 100:
-            game.screen.blit(self.image, self.rect)
+            game.screen.blit(a2.image, a2.rect)
         elif passed <= 200:
-            game.screen.blit(self.image2, (self.rect.x - 6, self.rect.y - 6))
+            game.screen.blit(a2.image2, (a2.rect.x - 6, a2.rect.y - 6))
         elif 400 < passed:
-            self.kill()
+            a2.kill()
 
 
 class MysteryExplosion(sprite.Sprite):
-    def __init__(self, mystery, score, *groups):
-        super(MysteryExplosion, self).__init__(*groups)
-        self.text = Text(
+    def __init__(a2, mystery, score, *groups):
+        super(MysteryExplosion, a2).__init__(*groups)
+        a2.text = Text(
             FONT, 20, str(score), WHITE, mystery.rect.x + 20, mystery.rect.y + 6
         )
-        self.timer = time.get_ticks()
+        a2.timer = time.get_ticks()
 
-    def update(self, current_time, *args):
-        passed = current_time - self.timer
+    def update(a2, current_time, *args):
+        passed = current_time - a2.timer
         if passed <= 200 or 400 < passed <= 600:
-            self.text.draw(game.screen)
+            a2.text.draw(game.screen)
         elif 600 < passed:
-            self.kill()
+            a2.kill()
 
 
 class ShipExplosion(sprite.Sprite):
-    def __init__(self, ship, *groups):
-        super(ShipExplosion, self).__init__(*groups)
-        self.image = IMAGES["ship"]
-        self.rect = self.image.get_rect(topleft=(ship.rect.x, ship.rect.y))
-        self.timer = time.get_ticks()
+    def __init__(a2, ship, *groups):
+        super(ShipExplosion, a2).__init__(*groups)
+        a2.image = IMAGES["ship"]
+        a2.rect = a2.image.get_rect(topleft=(ship.rect.x, ship.rect.y))
+        a2.timer = time.get_ticks()
 
-    def update(self, current_time, *args):
-        passed = current_time - self.timer
+    def update(a2, current_time, *args):
+        passed = current_time - a2.timer
         if 300 < passed <= 600:
-            game.screen.blit(self.image, self.rect)
+            game.screen.blit(a2.image, a2.rect)
         elif 900 < passed:
-            self.kill()
+            a2.kill()
 
 
 class Life(sprite.Sprite):
-    def __init__(self, xpos, ypos):
-        sprite.Sprite.__init__(self)
-        self.image = IMAGES["ship"]
-        self.image = transform.scale(self.image, (23, 23))
-        self.rect = self.image.get_rect(topleft=(xpos, ypos))
+    def __init__(a2, xpos, ypos):
+        sprite.Sprite.__init__(a2)
+        a2.image = IMAGES["ship"]
+        a2.image = transform.scale(a2.image, (23, 23))
+        a2.rect = a2.image.get_rect(topleft=(xpos, ypos))
 
-    def update(self, *args):
-        game.screen.blit(self.image, self.rect)
+    def update(a2, *args):
+        game.screen.blit(a2.image, a2.rect)
 
 
 class Text(object):
-    def __init__(self, textFont, size, message, color, xpos, ypos):
-        self.font = font.Font(textFont, size)
-        self.surface = self.font.render(message, True, color)
-        self.rect = self.surface.get_rect(topleft=(xpos, ypos))
+    def __init__(a2, textFont, size, message, color, xpos, ypos):
+        a2.font = font.Font(textFont, size)
+        a2.surface = a2.font.render(message, True, color)
+        a2.rect = a2.surface.get_rect(topleft=(xpos, ypos))
 
-    def draw(self, surface):
-        surface.blit(self.surface, self.rect)
+    def draw(a2, surface):
+        surface.blit(a2.surface, a2.rect)
 
 
 class SpaceInvaders(object):
-    def __init__(self):
+    def __init__(a2):
         # It seems, in Linux buffersize=512 is not enough, use 4096 to prevent:
         #   ALSA lib pcm.c:7963:(snd_pcm_recover) underrun occurred
         mixer.pre_init(44100, -16, 1, 4096)
         init()
-        self.clock = time.Clock()
-        self.caption = display.set_caption("Space Invaders")
-        self.screen = SCREEN
-        self.background = image.load(IMAGE_PATH + "background.jpg").convert()
-        self.startGame = False
-        self.mainScreen = True
-        self.gameOver = False
+        a2.clock = time.Clock()
+        a2.caption = display.set_caption("Space Invaders")
+        a2.screen = SCREEN
+        a2.background = image.load(IMAGE_PATH + "background.jpg").convert()
+        a2.startGame = False
+        a2.mainScreen = True
+        a2.gameOver = False
         # Counter for enemy starting position (increased each new round)
-        self.enemyPosition = ENEMY_DEFAULT_POSITION
-        self.titleText = Text(FONT, 50, "Space Invaders", WHITE, 164, 120)
-        self.titleText2 = Text(FONT, 25, "Press any key to continue", WHITE, 201, 205)
-        self.gameOverText = Text(FONT, 50, "Game Over", WHITE, 250, 270)
-        self.nextRoundText = Text(FONT, 50, "Next Round", WHITE, 240, 270)
-        self.enemy1Text = Text(FONT, 25, "   =   10 pts", GREEN, 368, 270)
-        self.enemy2Text = Text(FONT, 25, "   =  20 pts", BLUE, 368, 320)
-        self.enemy3Text = Text(FONT, 25, "   =  30 pts", PURPLE, 368, 370)
-        self.enemy4Text = Text(FONT, 25, "   =  ?????", RED, 368, 420)
-        self.scoreText = Text(FONT, 20, "Score", WHITE, 5, 5)
-        self.livesText = Text(FONT, 20, "Lives ", WHITE, 640, 5)
+        a2.enemyPosition = ENEMY_DEFAULT_POSITION
+        a2.titleText = Text(FONT, 50, "Space Invaders", WHITE, 164, 120)
+        a2.titleText2 = Text(FONT, 25, "Press any key to continue", WHITE, 201, 205)
+        a2.gameOverText = Text(FONT, 50, "Game Over", WHITE, 250, 270)
+        a2.nextRoundText = Text(FONT, 50, "Next Round", WHITE, 240, 270)
+        a2.enemy1Text = Text(FONT, 25, "   =   10 pts", GREEN, 368, 270)
+        a2.enemy2Text = Text(FONT, 25, "   =  20 pts", BLUE, 368, 320)
+        a2.enemy3Text = Text(FONT, 25, "   =  30 pts", PURPLE, 368, 370)
+        a2.enemy4Text = Text(FONT, 25, "   =  ?????", RED, 368, 420)
+        a2.scoreText = Text(FONT, 20, "Score", WHITE, 5, 5)
+        a2.livesText = Text(FONT, 20, "Lives ", WHITE, 640, 5)
         
-        self.creator_name = Text(FONT, 20, "Sandy Inspires", GREEN, 600, 570)
-        self.jtl = Text(FONT, 20, "THE LEAGUE", ORANGE, 10, 570)
+        a2.creator_name = Text(FONT, 20, "Sandy Inspires", GREEN, 600, 570)
+        a2.jtl = Text(FONT, 20, "THE LEAGUE", ORANGE, 10, 570)
 
-        self.life1 = Life(715, 3)
-        self.life2 = Life(742, 3)
-        self.life3 = Life(769, 3)
-        self.livesGroup = sprite.Group(self.life1, self.life2, self.life3)
+        a2.life1 = Life(715, 3)
+        a2.life2 = Life(742, 3)
+        a2.life3 = Life(769, 3)
+        a2.livesGroup = sprite.Group(a2.life1, a2.life2, a2.life3)
 
-    def reset(self, score):
-        self.player = Ship()
-        self.playerGroup = sprite.Group(self.player)
-        self.explosionsGroup = sprite.Group()
-        self.bullets = sprite.Group()
-        self.mysteryShip = Mystery()
-        self.mysteryGroup = sprite.Group(self.mysteryShip)
-        self.enemyBullets = sprite.Group()
-        self.make_enemies()
-        self.allSprites = sprite.Group(
-            self.player, self.enemies, self.livesGroup, self.mysteryShip
+    def reset(a2, score):
+        a2.player = Ship()
+        a2.playerGroup = sprite.Group(a2.player)
+        a2.explosionsGroup = sprite.Group()
+        a2.bullets = sprite.Group()
+        a2.mysteryShip = Mystery()
+        a2.mysteryGroup = sprite.Group(a2.mysteryShip)
+        a2.enemyBullets = sprite.Group()
+        a2.make_enemies()
+        a2.allSprites = sprite.Group(
+            a2.player, a2.enemies, a2.livesGroup, a2.mysteryShip
         )
-        self.keys = key.get_pressed()
+        a2.keys = key.get_pressed()
 
-        self.timer = time.get_ticks()
-        self.noteTimer = time.get_ticks()
-        self.shipTimer = time.get_ticks()
-        self.score = score
-        self.create_audio()
-        self.makeNewShip = False
-        self.shipAlive = True
+        a2.timer = time.get_ticks()
+        a2.noteTimer = time.get_ticks()
+        a2.shipTimer = time.get_ticks()
+        a2.score = score
+        a2.create_audio()
+        a2.makeNewShip = False
+        a2.shipAlive = True
 
-    def make_blockers(self, number):
+    def make_blockers(a2, number):
         blockerGroup = sprite.Group()
         for row in range(4):
             for column in range(9):
@@ -409,8 +409,8 @@ class SpaceInvaders(object):
                 blockerGroup.add(blocker)
         return blockerGroup
 
-    def create_audio(self):
-        self.sounds = {}
+    def create_audio(a2):
+        a2.sounds = {}
         for sound_name in [
             "shoot",
             "shoot2",
@@ -418,301 +418,301 @@ class SpaceInvaders(object):
             "mysterykilled",
             "shipexplosion",
         ]:
-            self.sounds[sound_name] = mixer.Sound(
+            a2.sounds[sound_name] = mixer.Sound(
                 SOUND_PATH + "{}.{}".format(sound_name, SOUND_FORMAT)
             )
-            self.sounds[sound_name].set_volume(0.2)
+            a2.sounds[sound_name].set_volume(0.2)
 
-        self.musicNotes = [
+        a2.musicNotes = [
             mixer.Sound(SOUND_PATH + "{}.{}".format(i, SOUND_FORMAT)) for i in range(4)
         ]
-        for sound in self.musicNotes:
+        for sound in a2.musicNotes:
             sound.set_volume(0.5)
 
-        self.noteIndex = 0
+        a2.noteIndex = 0
 
-    def play_main_music(self, currentTime):
-        if currentTime - self.noteTimer > self.enemies.moveTime:
-            self.note = self.musicNotes[self.noteIndex]
-            if self.noteIndex < 3:
-                self.noteIndex += 1
+    def play_main_music(a2, currentTime):
+        if currentTime - a2.noteTimer > a2.enemies.moveTime:
+            a2.note = a2.musicNotes[a2.noteIndex]
+            if a2.noteIndex < 3:
+                a2.noteIndex += 1
             else:
-                self.noteIndex = 0
+                a2.noteIndex = 0
 
-            self.note.play()
-            self.noteTimer += self.enemies.moveTime
+            a2.note.play()
+            a2.noteTimer += a2.enemies.moveTime
 
     @staticmethod
     def should_exit(evt):
         # type: (pygame.event.EventType) -> bool
         return evt.type == QUIT or (evt.type == KEYUP and evt.key == K_ESCAPE)
 
-    def check_input(self):
-        self.keys = key.get_pressed()
+    def check_input(a2):
+        a2.keys = key.get_pressed()
         for e in event.get():
-            if self.should_exit(e):
+            if a2.should_exit(e):
                 sys.exit()
             if e.type == KEYDOWN:
                 if e.key == K_SPACE:
-                    if len(self.bullets) == 0 and self.shipAlive:
-                        if self.score <= 100:
+                    if len(a2.bullets) == 0 and a2.shipAlive:
+                        if a2.score <= 100:
                             bullet = Bullet(
-                                self.player.rect.x + 23,
-                                self.player.rect.y + 5,
+                                a2.player.rect.x + 23,
+                                a2.player.rect.y + 5,
                                 -1,
                                 15,
                                 "laser",
                                 "center",
                             )
-                            self.bullets.add(bullet)
-                            self.allSprites.add(self.bullets)
-                            self.sounds["shoot"].play()
-                        elif self.score > 100 and self.score <= 200:
+                            a2.bullets.add(bullet)
+                            a2.allSprites.add(a2.bullets)
+                            a2.sounds["shoot"].play()
+                        elif a2.score > 100 and a2.score <= 200:
                             leftbullet = Bullet(
-                                self.player.rect.x + 8,
-                                self.player.rect.y + 5,
+                                a2.player.rect.x + 8,
+                                a2.player.rect.y + 5,
                                 -1,
                                 15,
                                 "laser",
                                 "left",
                             )
                             right_bullet = Bullet(
-                                self.player.rect.x + 38,
-                                self.player.rect.y + 5,
+                                a2.player.rect.x + 38,
+                                a2.player.rect.y + 5,
                                 -1,
                                 15,
                                 "laser",
                                 "right",
                             )
-                            self.bullets.add(leftbullet)
-                            self.bullets.add(right_bullet)
-                            self.allSprites.add(self.bullets)
-                            self.sounds["shoot2"].play()
+                            a2.bullets.add(leftbullet)
+                            a2.bullets.add(right_bullet)
+                            a2.allSprites.add(a2.bullets)
+                            a2.sounds["shoot2"].play()
 
                         else:
                             left_bullet = Bullet(
-                                self.player.rect.x + 8,
-                                self.player.rect.y + 5,
+                                a2.player.rect.x + 8,
+                                a2.player.rect.y + 5,
                                 -1,
                                 15,
                                 "laser",
                                 "left",
                             )
                             right_bullet = Bullet(
-                                self.player.rect.x + 38,
-                                self.player.rect.y + 5,
+                                a2.player.rect.x + 38,
+                                a2.player.rect.y + 5,
                                 -1,
                                 15,
                                 "laser",
                                 "right",
                             )
                             center_bullet = Bullet(
-                                self.player.rect.x + 23,
-                                self.player.rect.y + 5,
+                                a2.player.rect.x + 23,
+                                a2.player.rect.y + 5,
                                 -1,
                                 15,
                                 "laser",
                                 "center",
                             )
-                            self.bullets.add(left_bullet)
-                            self.bullets.add(center_bullet)
-                            self.bullets.add(right_bullet)
-                            self.allSprites.add(self.bullets)
-                            self.sounds["shoot2"].play()
+                            a2.bullets.add(left_bullet)
+                            a2.bullets.add(center_bullet)
+                            a2.bullets.add(right_bullet)
+                            a2.allSprites.add(a2.bullets)
+                            a2.sounds["shoot2"].play()
 
-    def make_enemies(self):
+    def make_enemies(a2):
         enemies = EnemiesGroup(10, 5)
         for row in range(5):
             for column in range(10):
                 enemy = Enemy(row, column)
                 enemy.rect.x = 157 + (column * 50)
-                enemy.rect.y = self.enemyPosition + (row * 45)
+                enemy.rect.y = a2.enemyPosition + (row * 45)
                 enemies.add(enemy)
 
-        self.enemies = enemies
+        a2.enemies = enemies
 
-    def make_enemies_shoot(self):
-        if (time.get_ticks() - self.timer) > 700 and self.enemies:
-            enemy = self.enemies.random_bottom()
-            self.enemyBullets.add(
+    def make_enemies_shoot(a2):
+        if (time.get_ticks() - a2.timer) > 700 and a2.enemies:
+            enemy = a2.enemies.random_bottom()
+            a2.enemyBullets.add(
                 Bullet(
                     enemy.rect.x + 14, enemy.rect.y + 20, 1, 5, "enemylaser", "center"
                 )
             )
-            self.allSprites.add(self.enemyBullets)
-            self.timer = time.get_ticks()
+            a2.allSprites.add(a2.enemyBullets)
+            a2.timer = time.get_ticks()
 
-    def calculate_score(self, row):
+    def calculate_score(a2, row):
         scores = {0: 30, 1: 20, 2: 20, 3: 10, 4: 10, 5: choice([50, 100, 150, 300])}
 
         score = scores[row]
-        self.score += score
+        a2.score += score
         return score
 
-    def create_main_menu(self):
-        self.enemy1 = IMAGES["enemy3_1"]
-        self.enemy1 = transform.scale(self.enemy1, (40, 40))
-        self.enemy2 = IMAGES["enemy2_2"]
-        self.enemy2 = transform.scale(self.enemy2, (40, 40))
-        self.enemy3 = IMAGES["enemy1_2"]
-        self.enemy3 = transform.scale(self.enemy3, (40, 40))
-        self.enemy4 = IMAGES["mystery"]
-        self.enemy4 = transform.scale(self.enemy4, (80, 40))
-        self.screen.blit(self.enemy1, (318, 270))
-        self.screen.blit(self.enemy2, (318, 320))
-        self.screen.blit(self.enemy3, (318, 370))
-        self.screen.blit(self.enemy4, (299, 420))
+    def create_main_menu(a2):
+        a2.enemy1 = IMAGES["enemy3_1"]
+        a2.enemy1 = transform.scale(a2.enemy1, (40, 40))
+        a2.enemy2 = IMAGES["enemy2_2"]
+        a2.enemy2 = transform.scale(a2.enemy2, (40, 40))
+        a2.enemy3 = IMAGES["enemy1_2"]
+        a2.enemy3 = transform.scale(a2.enemy3, (40, 40))
+        a2.enemy4 = IMAGES["mystery"]
+        a2.enemy4 = transform.scale(a2.enemy4, (80, 40))
+        a2.screen.blit(a2.enemy1, (318, 270))
+        a2.screen.blit(a2.enemy2, (318, 320))
+        a2.screen.blit(a2.enemy3, (318, 370))
+        a2.screen.blit(a2.enemy4, (299, 420))
 
-    def check_collisions(self):
-        sprite.groupcollide(self.bullets, self.enemyBullets, True, True)
+    def check_collisions(a2):
+        sprite.groupcollide(a2.bullets, a2.enemyBullets, True, True)
 
-        for enemy in sprite.groupcollide(self.enemies, self.bullets, True, True).keys():
-            self.sounds["invaderkilled"].play()
-            self.calculate_score(enemy.row)
-            EnemyExplosion(enemy, self.explosionsGroup)
-            self.gameTimer = time.get_ticks()
+        for enemy in sprite.groupcollide(a2.enemies, a2.bullets, True, True).keys():
+            a2.sounds["invaderkilled"].play()
+            a2.calculate_score(enemy.row)
+            EnemyExplosion(enemy, a2.explosionsGroup)
+            a2.gameTimer = time.get_ticks()
 
         for mystery in sprite.groupcollide(
-            self.mysteryGroup, self.bullets, True, True
+            a2.mysteryGroup, a2.bullets, True, True
         ).keys():
             mystery.mysteryEntered.stop()
-            self.sounds["mysterykilled"].play()
-            score = self.calculate_score(mystery.row)
-            MysteryExplosion(mystery, score, self.explosionsGroup)
+            a2.sounds["mysterykilled"].play()
+            score = a2.calculate_score(mystery.row)
+            MysteryExplosion(mystery, score, a2.explosionsGroup)
             newShip = Mystery()
-            self.allSprites.add(newShip)
-            self.mysteryGroup.add(newShip)
+            a2.allSprites.add(newShip)
+            a2.mysteryGroup.add(newShip)
 
         for player in sprite.groupcollide(
-            self.playerGroup, self.enemyBullets, True, True
+            a2.playerGroup, a2.enemyBullets, True, True
         ).keys():
-            if self.life3.alive():
-                self.life3.kill()
-            elif self.life2.alive():
-                self.life2.kill()
-            elif self.life1.alive():
-                self.life1.kill()
+            if a2.life3.alive():
+                a2.life3.kill()
+            elif a2.life2.alive():
+                a2.life2.kill()
+            elif a2.life1.alive():
+                a2.life1.kill()
             else:
-                self.gameOver = True
-                self.startGame = False
-            self.sounds["shipexplosion"].play()
-            ShipExplosion(player, self.explosionsGroup)
-            self.makeNewShip = True
-            self.shipTimer = time.get_ticks()
-            self.shipAlive = False
+                a2.gameOver = True
+                a2.startGame = False
+            a2.sounds["shipexplosion"].play()
+            ShipExplosion(player, a2.explosionsGroup)
+            a2.makeNewShip = True
+            a2.shipTimer = time.get_ticks()
+            a2.shipAlive = False
 
-        if self.enemies.bottom >= 540:
-            sprite.groupcollide(self.enemies, self.playerGroup, True, True)
-            if not self.player.alive() or self.enemies.bottom >= 600:
-                self.gameOver = True
-                self.startGame = False
+        if a2.enemies.bottom >= 540:
+            sprite.groupcollide(a2.enemies, a2.playerGroup, True, True)
+            if not a2.player.alive() or a2.enemies.bottom >= 600:
+                a2.gameOver = True
+                a2.startGame = False
 
-        sprite.groupcollide(self.bullets, self.allBlockers, True, True)
-        sprite.groupcollide(self.enemyBullets, self.allBlockers, True, True)
-        if self.enemies.bottom >= BLOCKERS_POSITION:
-            sprite.groupcollide(self.enemies, self.allBlockers, False, True)
+        sprite.groupcollide(a2.bullets, a2.allBlockers, True, True)
+        sprite.groupcollide(a2.enemyBullets, a2.allBlockers, True, True)
+        if a2.enemies.bottom >= BLOCKERS_POSITION:
+            sprite.groupcollide(a2.enemies, a2.allBlockers, False, True)
 
-    def create_new_ship(self, createShip, currentTime):
-        if createShip and (currentTime - self.shipTimer > 900):
-            self.player = Ship()
-            self.allSprites.add(self.player)
-            self.playerGroup.add(self.player)
-            self.makeNewShip = False
-            self.shipAlive = True
+    def create_new_ship(a2, createShip, currentTime):
+        if createShip and (currentTime - a2.shipTimer > 900):
+            a2.player = Ship()
+            a2.allSprites.add(a2.player)
+            a2.playerGroup.add(a2.player)
+            a2.makeNewShip = False
+            a2.shipAlive = True
 
-    def create_game_over(self, currentTime):
-        self.screen.blit(self.background, (0, 0))
-        passed = currentTime - self.timer
+    def create_game_over(a2, currentTime):
+        a2.screen.blit(a2.background, (0, 0))
+        passed = currentTime - a2.timer
         if passed < 750:
-            self.gameOverText.draw(self.screen)
+            a2.gameOverText.draw(a2.screen)
         elif 750 < passed < 1500:
-            self.screen.blit(self.background, (0, 0))
+            a2.screen.blit(a2.background, (0, 0))
         elif 1500 < passed < 2250:
-            self.gameOverText.draw(self.screen)
+            a2.gameOverText.draw(a2.screen)
         elif 2250 < passed < 2750:
-            self.screen.blit(self.background, (0, 0))
+            a2.screen.blit(a2.background, (0, 0))
         elif passed > 3000:
-            self.mainScreen = True
+            a2.mainScreen = True
 
         for e in event.get():
-            if self.should_exit(e):
+            if a2.should_exit(e):
                 sys.exit()
 
-    async def main(self):
+    async def main(a2):
         while True:
-            if self.mainScreen:
-                self.screen.blit(self.background, (0, 0))
-                self.titleText.draw(self.screen)
-                self.titleText2.draw(self.screen)
-                self.enemy1Text.draw(self.screen)
-                self.enemy2Text.draw(self.screen)
-                self.enemy3Text.draw(self.screen)
-                self.enemy4Text.draw(self.screen)
-                self.creator_name.draw(self.screen)
-                self.jtl.draw(self.screen)
-                self.create_main_menu()
+            if a2.mainScreen:
+                a2.screen.blit(a2.background, (0, 0))
+                a2.titleText.draw(a2.screen)
+                a2.titleText2.draw(a2.screen)
+                a2.enemy1Text.draw(a2.screen)
+                a2.enemy2Text.draw(a2.screen)
+                a2.enemy3Text.draw(a2.screen)
+                a2.enemy4Text.draw(a2.screen)
+                a2.creator_name.draw(a2.screen)
+                a2.jtl.draw(a2.screen)
+                a2.create_main_menu()
                 for e in event.get():
-                    if self.should_exit(e):
+                    if a2.should_exit(e):
                         sys.exit()
                     if e.type == KEYUP:
                         # Only create blockers on a new game, not a new round
-                        self.allBlockers = sprite.Group(
-                            self.make_blockers(0),
-                            self.make_blockers(1),
-                            self.make_blockers(2),
-                            self.make_blockers(3),
+                        a2.allBlockers = sprite.Group(
+                            a2.make_blockers(0),
+                            a2.make_blockers(1),
+                            a2.make_blockers(2),
+                            a2.make_blockers(3),
                         )
-                        self.livesGroup.add(self.life1, self.life2, self.life3)
-                        self.reset(0)
-                        self.startGame = True
-                        self.mainScreen = False
+                        a2.livesGroup.add(a2.life1, a2.life2, a2.life3)
+                        a2.reset(0)
+                        a2.startGame = True
+                        a2.mainScreen = False
 
-            elif self.startGame:
-                if not self.enemies and not self.explosionsGroup:
+            elif a2.startGame:
+                if not a2.enemies and not a2.explosionsGroup:
                     currentTime = time.get_ticks()
-                    if currentTime - self.gameTimer < 3000:
-                        self.screen.blit(self.background, (0, 0))
-                        self.scoreText2 = Text(FONT, 20, str(self.score), GREEN, 85, 5)
-                        self.scoreText.draw(self.screen)
-                        self.scoreText2.draw(self.screen)
-                        self.nextRoundText.draw(self.screen)
-                        self.livesText.draw(self.screen)
-                        self.livesGroup.update()
-                        self.check_input()
-                        self.creator_name.draw(self.screen)
-                        self.jtl.draw(self.screen)
-                    if currentTime - self.gameTimer > 3000:
+                    if currentTime - a2.gameTimer < 3000:
+                        a2.screen.blit(a2.background, (0, 0))
+                        a2.scoreText2 = Text(FONT, 20, str(a2.score), GREEN, 85, 5)
+                        a2.scoreText.draw(a2.screen)
+                        a2.scoreText2.draw(a2.screen)
+                        a2.nextRoundText.draw(a2.screen)
+                        a2.livesText.draw(a2.screen)
+                        a2.livesGroup.update()
+                        a2.check_input()
+                        a2.creator_name.draw(a2.screen)
+                        a2.jtl.draw(a2.screen)
+                    if currentTime - a2.gameTimer > 3000:
                         # Move enemies closer to bottom
-                        self.enemyPosition += ENEMY_MOVE_DOWN
-                        self.reset(self.score)
-                        self.gameTimer += 3000
+                        a2.enemyPosition += ENEMY_MOVE_DOWN
+                        a2.reset(a2.score)
+                        a2.gameTimer += 3000
                 else:
                     currentTime = time.get_ticks()
-                    self.play_main_music(currentTime)
-                    self.screen.blit(self.background, (0, 0))
-                    self.allBlockers.update(self.screen)
-                    self.scoreText2 = Text(FONT, 20, str(self.score), GREEN, 85, 5)
-                    self.scoreText.draw(self.screen)
-                    self.scoreText2.draw(self.screen)
-                    self.livesText.draw(self.screen)
-                    self.check_input()
-                    self.enemies.update(currentTime)
-                    self.allSprites.update(self.keys, currentTime)
-                    self.explosionsGroup.update(currentTime)
-                    self.check_collisions()
-                    self.create_new_ship(self.makeNewShip, currentTime)
-                    self.make_enemies_shoot()
-                    self.creator_name.draw(self.screen)
-                    self.jtl.draw(self.screen)
+                    a2.play_main_music(currentTime)
+                    a2.screen.blit(a2.background, (0, 0))
+                    a2.allBlockers.update(a2.screen)
+                    a2.scoreText2 = Text(FONT, 20, str(a2.score), GREEN, 85, 5)
+                    a2.scoreText.draw(a2.screen)
+                    a2.scoreText2.draw(a2.screen)
+                    a2.livesText.draw(a2.screen)
+                    a2.check_input()
+                    a2.enemies.update(currentTime)
+                    a2.allSprites.update(a2.keys, currentTime)
+                    a2.explosionsGroup.update(currentTime)
+                    a2.check_collisions()
+                    a2.create_new_ship(a2.makeNewShip, currentTime)
+                    a2.make_enemies_shoot()
+                    a2.creator_name.draw(a2.screen)
+                    a2.jtl.draw(a2.screen)
 
-            elif self.gameOver:
+            elif a2.gameOver:
                 currentTime = time.get_ticks()
                 # Reset enemy starting position
-                self.enemyPosition = ENEMY_DEFAULT_POSITION
-                self.create_game_over(currentTime)
+                a2.enemyPosition = ENEMY_DEFAULT_POSITION
+                a2.create_game_over(currentTime)
 
             display.update()
-            self.clock.tick(60)
+            a2.clock.tick(60)
             await asyncio.sleep(0)
 
 

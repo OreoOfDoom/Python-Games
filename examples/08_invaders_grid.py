@@ -19,11 +19,11 @@ red = (255, 0, 0)
 
 # Enemy class definition
 class Enemy:
-    def __init__(self, x, y):
-        self.rect = pygame.Rect(x, y, 30, 10)  # Create a 30x10 rectangle at (x, y)
+    def __init__(a2, x, y):
+        a2.rect = pygame.Rect(x, y, 30, 10)  # Create a 30x10 rectangle at (x, y)
 
-    def draw(self, surface):
-        pygame.draw.rect(surface, red, self.rect)  # Draw the enemy rectangle in red
+    def draw(a2, surface):
+        pygame.draw.rect(surface, red, a2.rect)  # Draw the enemy rectangle in red
 
 # Function to create a 6x4 grid of enemies
 def create_enemies():

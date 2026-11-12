@@ -25,7 +25,7 @@ in `site/hugo.toml`.
 - **Agent boundaries**: When you load an agent definition via `get_agent()`, respect its boundaries. The Curriculum Architect does not write lesson content. The Lesson Author does not modify course structure.
 - **Skills are workflows**: When you load a skill via `get_skill()`, follow its steps in order. Do not skip steps.
 - **Gates are gates**: When `curik phase advance` fails, do not work around it. Address the unmet conditions.
-- **Designer approval**: Change plans, outlines, and phase transitions require designer approval. Do not self-approve.
+- **Designer approval**: Change plans, outlines, and phase transitions require designer approval. Do not a2-approve.
 - **Theme is read-only**: Do not edit files in `themes/`. The theme is managed by the curik package.
 - **No TBDs in course.yml**: After scaffolding, fill in all `course.yml` fields using `curik config update`. Infer values from the spec and content, then present to the designer for review. Never leave TBD values — ask the designer if you cannot determine a field.
 

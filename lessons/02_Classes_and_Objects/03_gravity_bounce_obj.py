@@ -55,37 +55,37 @@ class Game:
     update, drawing and collision methods that operate on multiple other
     objects, like the player and obstacles."""
     
-    def __init__(self, settings: GameSettings):
+    def __init__(a2, settings: GameSettings):
         pygame.init()
 
-        self.settings = settings
-        self.running = True
+        a2.settings = settings
+        a2.running = True
 
-        self.screen = pygame.display.set_mode((self.settings.width, self.settings.height))
-        self.clock = pygame.time.Clock()
+        a2.screen = pygame.display.set_mode((a2.settings.width, a2.settings.height))
+        a2.clock = pygame.time.Clock()
 
-        self.players = []
+        a2.players = []
 
-    def add_player(self, player):
-        self.players.append(player)
+    def add_player(a2, player):
+        a2.players.append(player)
 
 
-    def run(self):
+    def run(a2):
         """Main game loop"""
 
-        while self.running:
+        while a2.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-                    self.running = False
+                    a2.running = False
 
-            self.screen.fill(Colors.WHITE)
+            a2.screen.fill(Colors.WHITE)
 
-            for player in self.players:
+            for player in a2.players:
                 player.update()
-                player.draw(self.screen)
+                player.draw(a2.screen)
                 
             pygame.display.flip()
-            self.clock.tick(self.settings.FPS)
+            a2.clock.tick(a2.settings.FPS)
 
         pygame.quit()
 
@@ -93,58 +93,58 @@ class Game:
 class Player:
     """Player class, just a bouncing rectangle"""
 
-    def __init__(self, game: Game):
-        self.game = game
+    def __init__(a2, game: Game):
+        a2.game = game
         settings = game.settings
 
-        self.width = settings.player_width
-        self.height = settings.player_height
+        a2.width = settings.player_width
+        a2.height = settings.player_height
       
-        self.is_jumping = False
-        self.v_jump = settings.jump_v_y
+        a2.is_jumping = False
+        a2.v_jump = settings.jump_v_y
 
-        self.y = settings.player_start_y if settings.player_start_y is not None else settings.height - self.height
-        self.x = settings.player_start_x
+        a2.y = settings.player_start_y if settings.player_start_y is not None else settings.height - a2.height
+        a2.x = settings.player_start_x
         
-        self.v_x = settings.v_0_x  # X Velocity
-        self.v_y = settings.v_0_y  # Y Velocity
+        a2.v_x = settings.v_0_x  # X Velocity
+        a2.v_y = settings.v_0_y  # Y Velocity
 
-    def update(self):
+    def update(a2):
         """Update player position, continuously jumping"""
-        self.update_jump()
-        self.update_y()
-        self.update_x()
+        a2.update_jump()
+        a2.update_y()
+        a2.update_x()
 
-    def update_y(self):
+    def update_y(a2):
         """Update the player's y position based on gravity and velocity"""
-        self.v_y += self.game.settings.gravity * self.game.settings.d_t # Add gravity to the y velocity
-        self.y += self.v_y * self.game.settings.d_t # Update the player's y position, based on the current velocity
+        a2.v_y += a2.game.settings.gravity * a2.game.settings.d_t # Add gravity to the y velocity
+        a2.y += a2.v_y * a2.game.settings.d_t # Update the player's y position, based on the current velocity
 
-        if self.y >= self.game.settings.height - self.height:
-            self.y = self.game.settings.height - self.height
-            self.v_y = 0
-            self.is_jumping = False
+        if a2.y >= a2.game.settings.height - a2.height:
+            a2.y = a2.game.settings.height - a2.height
+            a2.v_y = 0
+            a2.is_jumping = False
 
-    def update_x(self):
+    def update_x(a2):
         """Update the player's x position based on horizontal velocity and bounce on edges"""
-        self.x += self.v_x * self.game.settings.d_t  # Update the player's x position based on the current velocity
+        a2.x += a2.v_x * a2.game.settings.d_t  # Update the player's x position based on the current velocity
 
-        if self.x <= 0:
-            self.x = 0
-            self.v_x = -self.v_x
-        elif self.x >= self.game.settings.width - self.width:
-            self.x = self.game.settings.width - self.width
-            self.v_x = -self.v_x
+        if a2.x <= 0:
+            a2.x = 0
+            a2.v_x = -a2.v_x
+        elif a2.x >= a2.game.settings.width - a2.width:
+            a2.x = a2.game.settings.width - a2.width
+            a2.v_x = -a2.v_x
 
-    def update_jump(self):
+    def update_jump(a2):
         """Handle the player's jumping logic"""
         
-        if not self.is_jumping:
-            self.v_y = -self.v_jump
-            self.is_jumping = True
+        if not a2.is_jumping:
+            a2.v_y = -a2.v_jump
+            a2.is_jumping = True
 
-    def draw(self, screen):
-        pygame.draw.rect(screen, Colors.BLACK, (self.x, self.y, self.width, self.height))
+    def draw(a2, screen):
+        pygame.draw.rect(screen, Colors.BLACK, (a2.x, a2.y, a2.width, a2.height))
 
 
 settings = GameSettings()

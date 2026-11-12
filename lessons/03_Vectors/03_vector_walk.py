@@ -32,44 +32,44 @@ font = pygame.font.Font(None, Settings.FONT_SIZE)
 
 # Player class
 class Player:
-    def __init__(self, x, y):
+    def __init__(a2, x, y):
         """Initializes the Player with a position and direction vector.
 
         Args:
             x (int): The initial x-coordinate of the player.
             y (int): The initial y-coordinate of the player.
         """
-        self.position = pygame.math.Vector2(x, y)
-        self.direction_vector = pygame.math.Vector2(Settings.INITIAL_LENGTH, 0)  # Initial direction vector
+        a2.position = pygame.math.Vector2(x, y)
+        a2.direction_vector = pygame.math.Vector2(Settings.INITIAL_LENGTH, 0)  # Initial direction vector
 
-    def draw(self, show_line=True):
+    def draw(a2, show_line=True):
         """Draws the player and the direction vector on the screen."""
-        pygame.draw.rect(screen, Settings.PLAYER_COLOR, (self.position.x - Settings.PLAYER_SIZE // 2, self.position.y - Settings.PLAYER_SIZE // 2, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE))
+        pygame.draw.rect(screen, Settings.PLAYER_COLOR, (a2.position.x - Settings.PLAYER_SIZE // 2, a2.position.y - Settings.PLAYER_SIZE // 2, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE))
         
         # The end position of the direction vector is the player's position plus the direction vector
-        end_position = self.position + self.direction_vector
+        end_position = a2.position + a2.direction_vector
         
         if show_line:
-            pygame.draw.line(screen, Settings.LINE_COLOR, self.position, end_position, 2)
+            pygame.draw.line(screen, Settings.LINE_COLOR, a2.position, end_position, 2)
 
-    def move(self):
+    def move(a2):
         """Moves the player in the direction of the current angle."""
         
         
-        init_position = self.position # Save the initial position for the animation
+        init_position = a2.position # Save the initial position for the animation
         
         # Calculate the final position after moving. Its just addition!
-        final_position = self.position + self.direction_vector
+        final_position = a2.position + a2.direction_vector
         
         # The rest is just for animation
-        length = self.direction_vector.length()
+        length = a2.direction_vector.length()
         N = int(length // 3)
-        step = (final_position - self.position) / N
+        step = (final_position - a2.position) / N
        
         for i in range(N):
-            self.position += step
+            a2.position += step
             screen.fill(Settings.BACKGROUND_COLOR)
-            self.draw(show_line=False)
+            a2.draw(show_line=False)
             pygame.draw.line(screen, Settings.LINE_COLOR, init_position, final_position, 2)
             pygame.display.flip()
             clock.tick(Settings.FPS)

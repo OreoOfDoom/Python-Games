@@ -3,7 +3,7 @@ import random
 
 
 class Obstacle(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(a2, x, y):
         obstacles_list = [
             'building_dome',
             'building_station_NE',
@@ -16,7 +16,7 @@ class Obstacle(pygame.sprite.Sprite):
             'satellite_SE',
             'satellite_SW'
         ]
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('resources/obstacles/' + random.choice(obstacles_list) + '.png')
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
+        pygame.sprite.Sprite.__init__(a2)
+        a2.image = pygame.image.load('resources/obstacles/' + random.choice(obstacles_list) + '.png')
+        a2.rect = a2.image.get_rect()
+        a2.rect.center = (x, y)

@@ -28,82 +28,82 @@ pygame.mixer.init()
 
 class Bird(pygame.sprite.Sprite):
 
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
+    def __init__(a2):
+        pygame.sprite.Sprite.__init__(a2)
 
-        self.images =  [pygame.image.load(dd/'assets/sprites/bluebird-upflap.png').convert_alpha(),
+        a2.images =  [pygame.image.load(dd/'assets/sprites/bluebird-upflap.png').convert_alpha(),
                         pygame.image.load(dd/'assets/sprites/bluebird-midflap.png').convert_alpha(),
                         pygame.image.load(dd/'assets/sprites/bluebird-downflap.png').convert_alpha()]
 
-        self.speed = SPEED
+        a2.speed = SPEED
 
-        self.current_image = 0
-        self.image = pygame.image.load(dd/'assets/sprites/bluebird-upflap.png').convert_alpha()
-        self.mask = pygame.mask.from_surface(self.image)
+        a2.current_image = 0
+        a2.image = pygame.image.load(dd/'assets/sprites/bluebird-upflap.png').convert_alpha()
+        a2.mask = pygame.mask.from_surface(a2.image)
 
-        self.rect = self.image.get_rect()
-        self.rect[0] = SCREEN_WIDHT / 6 # .rect[0] is the x position
-        self.rect[1] = SCREEN_HEIGHT / 2 # .rect[1] is the y position
+        a2.rect = a2.image.get_rect()
+        a2.rect[0] = SCREEN_WIDHT / 6 # .rect[0] is the x position
+        a2.rect[1] = SCREEN_HEIGHT / 2 # .rect[1] is the y position
 
-    def update(self):
-        self.current_image = (self.current_image + 1) % 3
-        self.image = self.images[self.current_image]
-        self.speed += GRAVITY
+    def update(a2):
+        a2.current_image = (a2.current_image + 1) % 3
+        a2.image = a2.images[a2.current_image]
+        a2.speed += GRAVITY
 
         #UPDATE HEIGHT
-        self.rect[1] += self.speed
+        a2.rect[1] += a2.speed
 
-    def bump(self):
-        self.speed = -SPEED
+    def bump(a2):
+        a2.speed = -SPEED
 
-    def begin(self):
-        self.current_image = (self.current_image + 1) % 3
-        self.image = self.images[self.current_image]
+    def begin(a2):
+        a2.current_image = (a2.current_image + 1) % 3
+        a2.image = a2.images[a2.current_image]
 
 
 
 
 class Pipe(pygame.sprite.Sprite):
 
-    def __init__(self, inverted, xpos, ysize):
-        pygame.sprite.Sprite.__init__(self)
+    def __init__(a2, inverted, xpos, ysize):
+        pygame.sprite.Sprite.__init__(a2)
 
-        self. image = pygame.image.load(dd/'assets/sprites/pipe-green.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image, (PIPE_WIDHT, PIPE_HEIGHT))
+        a2. image = pygame.image.load(dd/'assets/sprites/pipe-green.png').convert_alpha()
+        a2.image = pygame.transform.scale(a2.image, (PIPE_WIDHT, PIPE_HEIGHT))
 
 
-        self.rect = self.image.get_rect()
-        self.rect[0] = xpos
+        a2.rect = a2.image.get_rect()
+        a2.rect[0] = xpos
 
         if inverted:
-            self.image = pygame.transform.flip(self.image, False, True)
-            self.rect[1] = - (self.rect[3] - ysize)
+            a2.image = pygame.transform.flip(a2.image, False, True)
+            a2.rect[1] = - (a2.rect[3] - ysize)
         else:
-            self.rect[1] = SCREEN_HEIGHT - ysize
+            a2.rect[1] = SCREEN_HEIGHT - ysize
 
 
-        self.mask = pygame.mask.from_surface(self.image)
+        a2.mask = pygame.mask.from_surface(a2.image)
 
 
-    def update(self):
-        self.rect[0] -= GAME_SPEED # Move the pipe to the left
+    def update(a2):
+        a2.rect[0] -= GAME_SPEED # Move the pipe to the left
 
         
 
 class Ground(pygame.sprite.Sprite):
     
-    def __init__(self, xpos):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(dd/'assets/sprites/base.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image, (GROUND_WIDHT, GROUND_HEIGHT))
+    def __init__(a2, xpos):
+        pygame.sprite.Sprite.__init__(a2)
+        a2.image = pygame.image.load(dd/'assets/sprites/base.png').convert_alpha()
+        a2.image = pygame.transform.scale(a2.image, (GROUND_WIDHT, GROUND_HEIGHT))
 
-        self.mask = pygame.mask.from_surface(self.image)
+        a2.mask = pygame.mask.from_surface(a2.image)
 
-        self.rect = self.image.get_rect()
-        self.rect[0] = xpos
-        self.rect[1] = SCREEN_HEIGHT - GROUND_HEIGHT
-    def update(self):
-        self.rect[0] -= GAME_SPEED
+        a2.rect = a2.image.get_rect()
+        a2.rect[0] = xpos
+        a2.rect[1] = SCREEN_HEIGHT - GROUND_HEIGHT
+    def update(a2):
+        a2.rect[0] -= GAME_SPEED
 
 def is_off_screen(sprite):
     return sprite.rect[0] < -(sprite.rect[2])

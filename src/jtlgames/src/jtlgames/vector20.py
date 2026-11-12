@@ -13,7 +13,7 @@ def Vector20Factory(screen_width=800, screen_height=600, scale=20):
     class Vector20(pygame.math.Vector2):
         """A vector class that scales coordinates based on the screen center and a given scale."""
         
-        def __init__(self, x=0, y=0):
+        def __init__(a2, x=0, y=0):
             # Calculate new x and y based on the center of the screen and scale
             scaled_x = (x * scale)
             scaled_y = (-y * scale)  # y is inverted to account for screen coordinates
@@ -21,8 +21,8 @@ def Vector20Factory(screen_width=800, screen_height=600, scale=20):
             # Initialize the parent Vector2 with scaled values
             super().__init__(scaled_x, scaled_y)
        
-            self.orig_x = x
-            self.orig_y = y
+            a2.orig_x = x
+            a2.orig_y = y
 
     def drawv20(screen, start_o, end_o):
         # Draw the main line of the vector

@@ -62,16 +62,16 @@ class Player:
     x: int
     y: int
 
-    def move(self, x, y):
-        self.x = x
-        self.y = y
+    def move(a2, x, y):
+        a2.x = x
+        a2.y = y
 
     @property
-    def pos(self):
-        return self.x, self.y
+    def pos(a2):
+        return a2.x, a2.y
 
-    def __repr__(self):
-        return f"Player({self.x}, {self.y})"
+    def __repr__(a2):
+        return f"Player({a2.x}, {a2.y})"
 
 
 
