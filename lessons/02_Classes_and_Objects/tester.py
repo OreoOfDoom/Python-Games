@@ -5,7 +5,7 @@
 # 4. Add a method to display the full name of the person.
 # 5. Notice that when you set the spouse of a Parent, the spouse is also set as
 #    the spouse of the spouse. So, you only have to set the spose for oe of them.
-#    Make the 'parent' argument of CHild work the same way: for each of the
+#    Make the 'parent' argument of Child work the same way: for each of the
 #    parents of the child, ensure that the child is set as a child of the parent.
 #    Then you can remove the '.ad_child' calls. 
 # 6. Write a function, print_family, that takes just one parent, and prints out
@@ -14,63 +14,63 @@ class Person:
     """Person represents a person in our system."""
 
      # This is the initializer, it gets run when we create a new object
-    def __init__(a2, name: str, age: int):
+    def __init__(self, name: str, age: int):
         """Initializes a new Person object."""
-        a2.name = name
-        a2.age = age
+        self.name = name
+        self.age = age
 
-    def say_hello(a2, message: str):
+    def say_hello(self, message: str):
         """Prints a greeting to the console."""
-        print(f"Hello, my name is {a2.name} and I am {a2.age} years old. {message}")
+        print(f"Hello, my name is {self.name} and I am {self.age} years old. {message}")
         
         
 class Parent(Person):
     """Parent represents a parent in our system."""
 
-    def __init__(a2, name: str, age: int, spouse=None):
+    def __init__(self, name: str, age: int, spouse=None):
         """Initializes a new Parent object."""
         super().__init__(name, age) # Call Person.__init__ to initialize the name and age attributes
-        a2.children = []
+        self.children = []
         
         # Set our spose but also set the spouse's spouse to us
         if spouse:
-            a2.spouse = spouse
-            spouse.spouse = a2
+            self.spouse = spouse
+            spouse.spouse = self
         
-        a2.spouse = None
+        self.spouse = None
 
-    def add_child(a2, child: Person):
+    def add_child(self, child: Person):
         """Adds a child to the parent's list of children."""
-        a2.children.append(child)
+        self.children.append(child)
         
 
-    def say_hello(a2, message: str):
+    def say_hello(self, message: str):
         """Prints a greeting to the console."""
         
         super().say_hello(message)
-        if a2.spouse:
-            print(f"My spouse is {a2.spouse.name}")
+        if self.spouse:
+            print(f"My spouse is {self.spouse.name}")
             
-        print(f"I have {len(a2.children)} children.")
+        print(f"I have {len(self.children)} children.")
 
-        if len(a2.children) > 0:
+        if len(self.children) > 0:
             print("Their names are:")
-            for child in a2.children:
+            for child in self.children:
                 print(f"  {child.name} {child.age}")
                 
                 
 class Child(Person):
     """Child represents a child in our system."""
 
-    def __init__(a2, name: str, age: int, parents: list):
+    def __init__(self, name: str, age: int, parents: list):
         """Initializes a new Child object."""
         super().__init__(name, age)  # Call Person.__init__ to initialize the name and age attributes
-        a2.parents = parents
+        self.parents = parents
 
-    def say_hello(a2, message: str):
+    def say_hello(self, message: str):
         """Prints a greeting to the console."""
         super().say_hello(message)
-        print(f"My parents are {', '.join([parent.name for parent in a2.parents])}")
+        print(f"My parents are {', '.join([parent.name for parent in self.parents])}")
         
         
 # Now lets make a family
