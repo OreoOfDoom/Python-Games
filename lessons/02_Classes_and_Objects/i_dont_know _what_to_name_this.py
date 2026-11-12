@@ -1,5 +1,15 @@
 # Run Me!
-
+# 1. Copy the code for Person, Parent and Child into a new file.
+# 2. Change the code so everyone has a first name and a last name.
+# 3. Ensure that everyone in the family has the same last name
+# 4. Add a method to display the full name of the person.
+# 5. Notice that when you set the spouse of a Parent, the spouse is also set as
+#    the spouse of the spouse. So, you only have to set the spose for oe of them.
+#    Make the 'parent' argument of CHild work the same way: for each of the
+#    parents of the child, ensure that the child is set as a child of the parent.
+#    Then you can remove the '.ad_child' calls. 
+# 6. Write a function, print_family, that takes just one parent, and prints out
+#    the entire family.
 class Person:
     """Person represents a person in our system."""
 
