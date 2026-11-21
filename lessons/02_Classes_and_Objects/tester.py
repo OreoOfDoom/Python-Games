@@ -10,6 +10,8 @@
 #    Then you can remove the '.ad_child' calls. 
 # 6. Write a function, print_family, that takes just one parent, and prints out
 #    the entire family.
+"""6. Write a function, print_family, that takes just one parent, and prints out
+   the entire family."""
 class Person:
     """Person represents a person in our system."""
 
@@ -26,7 +28,15 @@ class Person:
     def say_hello(self, message: str):
         """Prints a greeting to the console."""
         print(f"Hello, my name is {self.name} {self.last_name} and I am {self.age} years old. {message}")
-
+    def print_family(self):
+        """Prints the entire family starting from this person."""
+        print(f"Family of {self.get_full_name()}:")
+        if self.spouse:
+            print(f"  Spouse: {self.spouse.get_full_name()}")
+        if self.children:
+            print("  Children:")
+            for child in self.children:
+                print(f"    {child.get_full_name()}")
 
 class Parent(Person):
     """Parent represents a parent in our system."""

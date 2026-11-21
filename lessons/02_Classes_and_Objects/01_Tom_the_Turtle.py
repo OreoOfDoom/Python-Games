@@ -27,6 +27,11 @@ Assignment 4:
 
 
 """
+def pen_up(turtle):
+    turtle.pen_up()
+def pen_down(turtle):
+    turtle.pen_down()
+
 import math
 
 import pygame
@@ -39,7 +44,24 @@ def event_loop():
             if event.type == pygame.QUIT:
                 return
 
+class Turtle_mover:
+    
 
+    def __init__(self, turtle):
+        self.turtle = turtle
+    def turn_left(self, angle):
+        self.turtle.left(angle)
+
+    def turn_right(self, angle):
+        self.turtle.right(angle)
+    color = "red"
+
+    def set_color(self, color):
+        self.color = color
+        self.turtle.color = color
+
+    def move(self, distance):
+        self.turtle.forward(distance)
 class Turtle:
     def __init__(a2, screen, x: int, y: int):
         a2.x = x
@@ -68,6 +90,7 @@ class Turtle:
     def left(a2, angle):
         # Turn left by adjusting the angle counterclockwise
         a2.angle = (a2.angle + angle) % 360
+
 # def alien (name,legs,eyes,color):
     
 #     alien = Turtle
@@ -86,7 +109,7 @@ pygame.init()
 width, height = 500, 500
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Turtle Style Drawing")
-
+pen_up()
 # Colors
 white = (255, 250, 55)
 black = (0, 0, 0)
@@ -94,13 +117,15 @@ black = (0, 0, 0)
 
 screen.fill(white)
 turtle = Turtle(screen, screen.get_width() // 2, screen.get_height() // 2)  # Start at the center of the screen
-
+pen_down(turtle)
 # Draw a square using turtle-style commands
 for _ in range(4):
     turtle.forward(100)  # Move forward by 100 pixels
     turtle.left(90)  # Turn left by 90 degrees
-
+boblo = Turtle_mover(turtle)
+boblo.set_color("blue")
 # Display the drawing
+pen_up(turtle)
 pygame.display.flip()
 
 # Wait to quit
